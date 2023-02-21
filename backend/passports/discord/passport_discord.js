@@ -7,9 +7,9 @@ const {
     discord_callback, 
     discord_client_secret, 
     discord_client_id 
-} = require('../config.js')
+} = require('../../config.js')
 
-const Schema = require('../models/UserSchema.js')
+const Schema = require('../../models/UserSchema.js')
 
 passport.use(new Discord({
     clientID: `${discord_client_id}`,
@@ -20,11 +20,13 @@ passport.use(new Discord({
     try{
         const user = await Schema.user_auth.findOne({userID: profile.id})
         if(user){
+// Тоже самое сделать проверку с аватаркой но посмотреть если есть то добавляем и обновляем новую
             await user.updateOne({
                 userName: profile.username
             })
             done(null, user)
         }else{
+// сделать проверку с аватарки если нету то найти или же сделать аватарку с Null
             const newUser_discord = new Schema.user_auth({
                 userID: profile.id,
                 userName: profile.username,

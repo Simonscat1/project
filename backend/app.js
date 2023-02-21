@@ -2,12 +2,11 @@ const cookieParser = require("cookie-parser")
 const cookieSession = require('cookie-session');
 const express = require('express');
 const cors = require('cors');
-
-
 const passport = require('passport');
 const mongoose = require('mongoose');
-const discord = require('./passports/passport_discord')
-const { auth } = require('./routes/index.js')
+
+const { discord } = require('./passports/index.js')
+const { auth, post } = require('./routes/index.js')
 const { port, mongodb } = require("./config.js");
 
 
@@ -30,7 +29,8 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use('/auth', auth)
+app.use('/auth', auth);
+app.use('/api', post)
 
 mongoose.set('strictQuery', false).connect(mongodb, { useNewUrlParser: true }, async (err, database) => {
     

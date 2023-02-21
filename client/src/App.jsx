@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 
 import Login from './Components/Login/Login';
 import Navbar from './Components/Navbar/Navbar';
+import Profile from "./Components/Profile/Profile";
 import './App.css';
 
 
 const App = () => {
-    const [userDiscord, serUserDiscord] = useState(null);
+    const [userDiscord, setUserDiscord] = useState(null);
     useEffect(() => {
         const getUser = () => {
             fetch('/auth/login/success', {
@@ -22,7 +23,7 @@ const App = () => {
                 if(response.status === 200) return response.json()
                 throw new Error("Ошибка")
             }).then((resObject) => {
-                serUserDiscord(resObject.user)
+                setUserDiscord(resObject.user)
             }).catch((err) => {
                 console.log(err)
             })
@@ -52,7 +53,7 @@ const App = () => {
                 />
                 <Route
                     path="/:id"
-                    element={userDiscord ? <Personal key={userDiscord} user={userDiscord} /> : <Navigate to={`/${userDiscord.userID}`} />}
+                    element={userDiscord ? <Profile key={userDiscord} user={userDiscord} /> : <Navigate to={`/${userDiscord.userID}`} />}
                 />
             </Routes>
         </BrowserRouter>
