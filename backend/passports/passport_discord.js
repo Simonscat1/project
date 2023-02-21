@@ -38,7 +38,8 @@ passport.use(new Discord({
         console.log(err)
         done(err, null)
     }
-}))
+}));
+
 passport.serializeUser((user, done) => {
     done(null, user);
 });

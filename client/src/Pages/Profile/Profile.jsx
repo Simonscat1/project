@@ -5,7 +5,7 @@ const Personal_account = ({ user }) =>{
     return(
         <div className="">
             <Link className="link" to={`/${user.userID}`}>
-                Личный Кабинет
+                 Профиль
             </Link>
             
         </div>

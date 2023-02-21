@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import PersonalAc from "../../Pages/PersonalAc"
+import PersonalAc from "../../Pages/Profile"
 const Navbar = ({ user }) => {
 
     const Logout = () => {
