@@ -1,5 +1,9 @@
+import "./profile.css"
 const Profile = ({ user }) => {
-     <div> Создать профиль с кнопокой редактирование самого профиля</div>
+     console.log(user.avatar, user.userName)
+     return(
+          <div>сделать профиль на подобия стима и тут же сделать на редактирование описания</div>
+     )
 }
 
 export default Profile;

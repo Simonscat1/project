@@ -1,0 +1,38 @@
+.navbar {
+    height: 50px;
+    background-color: rgba(102, 16, 83, 0.698);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+.listItem {
+    margin-right: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.listItem .toggle_btn {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    cursor: pointer;
+    border: none;
+  }
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.link{
+    color: inherit;
+    text-decoration: none;
+  }

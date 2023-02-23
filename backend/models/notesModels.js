@@ -6,8 +6,6 @@ const notesSchema = ({
     content: { type: String },
     data_start: { type: String },
     data_end: { type: String },
-    author: { type: String },
-    edit_author: { type: String },
 });
 
 const Note = mongoose.model("Note", notesSchema);

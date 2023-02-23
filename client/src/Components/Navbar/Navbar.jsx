@@ -1,40 +1,67 @@
-import { Link } from "react-router-dom";
-import PersonalAc from "../../Pages/Profile"
-const Navbar = ({ user }) => {
+import Profile from "../../Pages/Profile/Profile";
+import Discord from "../../Images/DiscordAvatars.jpg"
 
+import { Link } from "react-router-dom";
+import "./navbar.css"
+
+const Navbar = ({ user }) => {
     const Logout = () => {
         window.open(`${process.env.REACT_APP_REDIRECT}/auth/logout`, "_self")
     }
 
-    if(user !== undefined){
-        return(
-            <ul className="list">
+    function GetUser(props){
+        const isGetUser = props.isGetUser
 
-                <li className="listItem">
-                    <PersonalAc key={user} user={user} />
-                </li>
-                <li className="listItem">
-                    <img
-                        src={user.avatar}
-                        alt=""
-                        className="avatar"
-                    />
-                </li>
-                <li className="listItem">
-                    <button onClick={Logout}>Logout</button>
-                </li>
-            </ul>
-        )
+        if(isGetUser === undefined){
+            return( 
+                <ul className="list">
+                    <li className="listItem">
+                        <Link className="link" to="login">
+                            Login
+                        </Link>
+                    </li>
+                </ul>
+            )
+        }else {
+            return (
+                <ul className="list">
+                    <li className="listItem">
+                        {isGetUser.avatar === null ? (
+                            <img 
+                                src={Discord}
+                                alt=""
+                                className="avatar"
+                            />
+                        ):(
+                            <img 
+                                src={isGetUser.avatar}
+                                alt=""
+                                className="avatar"
+                            />
+                        )}
+                    </li>
+                    <li className="listItem">
+                        {Array(isGetUser).map(user =>(
+                            <Profile key={user} user={user} />
+                        ))}
+                    </li>
+                    <li className="listItem" onClick={Logout}>
+                        Logout
+                    </li>
+                 </ul>
+    
+            )
+        }
     }
-
     return(
-        <ul className="list">
-            <li className="listItem">
-                <Link className="link" to="login">
-                    Login
+        <div className="navbar">
+            <span className="logo">
+                <Link className="link" to="/">
+                    Twitch Revels
                 </Link>
-            </li>
-        </ul>
+            </span>
+            <GetUser isGetUser={user}/>
+        </div>
     )
 }
 

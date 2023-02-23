@@ -1,4 +1,4 @@
-import Twitch from '../../Images/twitch.png'
+import Discord from '../../Images/DiscordLogo.png'
 import "./login.css"
 
 const Login = () => {
@@ -11,7 +11,7 @@ const Login = () => {
             <div className="wrapper">
                 <div className="left">
                     <div className="loginButton discord" onClick={discord}>
-                        <img src={Twitch} alt="" className="icon" />
+                        <img src={Discord} alt="" className="icon" />
                             Discord
                     </div>
                 </div>

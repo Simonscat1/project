@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import Login from './Components/Login/Login';
 import Navbar from './Components/Navbar/Navbar';
 import Profile from "./Components/Profile/Profile";
-import './App.css';
-
+import Home from "./Components/Home/Home"
 
 const App = () => {
     const [userDiscord, setUserDiscord] = useState(null);
@@ -47,13 +46,17 @@ const App = () => {
         <BrowserRouter>
             <Navbar user={userDiscord} />
             <Routes>
-                <Route
-                    path="/login"
-                    element={userDiscord ? <Navigate to="/" /> : <Login />}
+                <Route 
+                    path="/" 
+                    element={<Home />} 
                 />
                 <Route
+                    path="/login"
+                     element={userDiscord ? <Navigate to="/" /> : <Login />}
+                />
+                <Route 
                     path="/:id"
-                    element={userDiscord ? <Profile key={userDiscord} user={userDiscord} /> : <Navigate to={`/${userDiscord.userID}`} />}
+                    element={userDiscord ? <Profile key={userDiscord} user={userDiscord} /> : <Navigate to={`*/${userDiscord.userID}`} />}
                 />
             </Routes>
         </BrowserRouter>

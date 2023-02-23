@@ -9,9 +9,9 @@ const userSchema = Schema({
 });
 
 const site_db = new Schema({
-     discord: { type:Schema.Types.ObjectId, ref:'user_auth' },
-     friends: { type: Array },
-     ID: { type:Schema.Types.userID, ref:"user_auth" }
+    discord: { type:Schema.Types.ObjectId, ref:'user_auth' },
+    friends: { type: Array },
+    elo: { type: String },
  });
 
 const user_auth = mongoose.model('user_auth', userSchema, 'user_auth');

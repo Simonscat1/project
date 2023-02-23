@@ -7,9 +7,9 @@ const {
     discord_callback, 
     discord_client_secret, 
     discord_client_id 
-} = require('../../config.js')
+} = require('../../config.js');
 
-const Schema = require('../../models/UserSchema.js')
+const Schema = require('../../models/UserSchema.js');
 
 passport.use(new Discord({
     clientID: `${discord_client_id}`,
@@ -18,28 +18,40 @@ passport.use(new Discord({
     
 }, async (accessToken, refreshToken, profile, done) => {
     try{
-        const user = await Schema.user_auth.findOne({userID: profile.id})
+        const user = await Schema.user_auth.findOne({userID: profile.id});
         if(user){
-// Тоже самое сделать проверку с аватаркой но посмотреть если есть то добавляем и обновляем новую
-            await user.updateOne({
-                userName: profile.username
-            })
-            done(null, user)
+            if(profile.avatar != user.avatar){
+                await user.updateOne({
+                    avatar: `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`
+                });
+            }else{
+                await user.updateOne({
+                    avatar: null
+                });
+            };
+            done(null, user);
         }else{
-// сделать проверку с аватарки если нету то найти или же сделать аватарку с Null
-            const newUser_discord = new Schema.user_auth({
-                userID: profile.id,
-                userName: profile.username,
-                avatar: `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`,
-            });
-            const saveUser = await newUser_discord.save()
+            if(profile.avatar != null){
+                const newUser_discord = new Schema.user_auth({
+                    userID: profile.id,
+                    userName: profile.username,
+                    avatar: `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`,
+                });
+                var saveUser = await newUser_discord.save();
+            }else{
+                const newUser_discord = new Schema.user_auth({
+                    userID: profile.id,
+                    userName: profile.username,
+                    avatar: null,
+                });
+                var saveUser = await newUser_discord.save();
+            };
             done(null, saveUser);
-        }
-        
+        };
     }catch(err){
-        console.log(err)
-        done(err, null)
-    }
+        console.log(err);
+        done(err, null);
+    };
 }));
 
 passport.serializeUser((user, done) => {
@@ -47,8 +59,8 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-    const user = await Schema.user_auth.findOne({ userID: id.userID })
+    const user = await Schema.user_auth.findOne({ userID: id.userID });
     if(user){
         done(null, user);
-    }
+    };
 });

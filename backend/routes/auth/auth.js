@@ -1,13 +1,31 @@
-const router = require('express').Router()
-const passport = require('passport')
+const router = require('express').Router();
+const passport = require('passport');
+
+const Schema = require('../../models/UserSchema.js')
+const {scope_discord, options } = require("../../utill/scope.js");
+const getCookies = require("../../utill/getCookies.js");
 const { client_url } = require('../../config.js');
 
 router.get("/login/success", async (req, res) => {
     if(req.user){
+        if(req.cookies["auth"] != undefined){
+            try{
+                const user = await Schema.site.findOne({ discord: req.cookies["auth"] });
+                if(user == null){
+                    const createUserSite = new Schema.site({
+                        discord: req.cookies["auth"],
+                        friend:null,
+                        elo: 0,
+                    });
+                    await createUserSite.save();
+                };
+            }catch(err){
+                console.log(err);
+            };
+        };
+        const user = await getCookies.getsInfo(req.cookies["auth"])
         res.status(200).json({
-            success: true,
-            message: "successfull",
-            user: req.user,
+            user: user,
         });
     };
 });
@@ -22,20 +40,24 @@ router.get("/login/failed", (req, res) => {
 
 router.get("/logout", (req, res) => {
     req.logout();
+    res.clearCookie("auth");
     res.redirect(client_url);
 })
 
 router.get("/discord", 
     passport.authenticate("discord", {
-        scope: ['identify'] 
+        scope: scope_discord
     })
 );
 
 router.get("/discord/callback", 
     passport.authenticate("discord", {
-        successRedirect: client_url,
         failureRedirect: "/login/failed"
-    })
-)
+    }), async function(req, res){
+        const id = req.user._id;
+        res.cookie("auth", id, options);
+        res.redirect(client_url);
+    }
+);
 
 module.exports = router;
