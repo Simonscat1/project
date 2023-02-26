@@ -6,6 +6,23 @@ const {scope_discord, options } = require("../../utill/scope.js");
 const getCookies = require("../../utill/getCookies.js");
 const { client_url } = require('../../config.js');
 
+router.route("/").get(async(req,res) => {
+    const user_id = req.query.userid;
+    // const username = req.query.username
+    try{
+        const user = await Schema.site.findOne({ ID: user_id });
+        const { discord, _id, ...other } = user._doc;
+        const user_in_discord = await Schema.user_auth.findById(discord);
+        
+        res.status(200).json({
+            discord: user_in_discord,
+            user: other
+        });
+    }catch(err){
+        res.status(500).json(err);
+    };
+});
+
 router.get("/login/success", async (req, res) => {
     if(req.user){
         if(req.cookies["auth"] != undefined){
@@ -16,17 +33,23 @@ router.get("/login/success", async (req, res) => {
                         discord: req.cookies["auth"],
                         friend:null,
                         elo: 0,
+                        ID: null
                     });
                     await createUserSite.save();
                 };
             }catch(err){
                 console.log(err);
             };
+            const user_disocrd = await getCookies.getsInfo(req.cookies["auth"])
+            const users = await Schema.site.findOne({ discord: req.cookies["auth"] })
+            await users.updateOne({
+                ID: user_disocrd.userID
+            })
+            res.status(200).json({
+                user: user_disocrd,
+            });
         };
-        const user = await getCookies.getsInfo(req.cookies["auth"])
-        res.status(200).json({
-            user: user,
-        });
+
     };
 });
 //сделать так чтоб ошибки были перенаправлины на клинскую часть и новр ошибки передовать как и надпись
@@ -54,9 +77,9 @@ router.get("/discord/callback",
     passport.authenticate("discord", {
         failureRedirect: "/login/failed"
     }), async function(req, res){
-        const id = req.user._id;
-        res.cookie("auth", id, options);
-        res.redirect(client_url);
+        const _id = req.user._id;
+        res.cookie("auth", _id, options);
+        res.redirect(`${client_url}/${req.user.userID}`);
     }
 );
 
