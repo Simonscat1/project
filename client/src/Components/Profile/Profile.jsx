@@ -3,7 +3,9 @@ import { useLocation } from "react-router";
 import Avatars from "../../Images/DiscordAvatars.jpg"
 import axios from "axios"
 import "./profile.css"
-
+//создать 2 профеля компонентов 1 для того чтоб редакитировать второй для добавление в друзья
+//создать увед по добавлению в друзья
+//создать админ палель и там же сделать редактирование сетки + создание постов
 const Profile = ({ user }) => {
     const [users_gets, setUserGets] = useState(null) 
     const location = useLocation();
