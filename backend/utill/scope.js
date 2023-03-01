@@ -3,7 +3,6 @@ const scope_discord = [
 ];
 
 const options = {
-    secure: true, 
     maxAge: 24 * 60 * 60 * 1000, 
     httpOnly: true,
 };

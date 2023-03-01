@@ -83,4 +83,21 @@ router.get("/discord/callback",
     }
 );
 
+router.get("/friends", async (req, res) => {
+     const user_id = req.query.userid;
+     // const username = req.query.username
+     try{
+          const user = await Schema.site.findOne({ friends:{ id: user_id} });
+          if(user.friends = {}){
+               console.log(user)
+          }   
+     }catch(err){
+         res.status(500).json(err);
+     };
+})
+
+router.post("/friends:id", (req, res) => {
+     const id = req.query
+})
+
 module.exports = router;
