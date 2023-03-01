@@ -4,6 +4,8 @@ const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
+const socketIO = require('socket.io')
+const http = require('http')
 
 const { discord } = require('./passports/index.js');
 const { auth, post } = require('./routes/index.js');
@@ -11,6 +13,10 @@ const { port, mongodb } = require("./config.js");
 
 
 const app = express();
+const server = http.createServer(app)
+const io = socketIO(server)
+
+require('./soket/friend')(io)
 
 app.use(session({
     name: "web",
