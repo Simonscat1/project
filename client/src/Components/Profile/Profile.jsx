@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import Avatars from "../../Images/DiscordAvatars.jpg"
+import socket from "../../socket.js";
 import axios from "axios"
 import "./profile.css"
-//разделить на 2 разых компонента 
 //создать увед по добавлению в друзья
 //создать админ палель и там же сделать редактирование сетки + создание постов
 const Profile = ({ user }) => {
-     const [users_gets, setUserGets] = useState(null) 
+     const [users_gets, setUserGets] = useState(null)
+     const [lastPong, setLastPong] = useState(null);
      const location = useLocation();
      const path = location.pathname.split("/")[1];
      useEffect(() => {
@@ -18,11 +19,21 @@ const Profile = ({ user }) => {
           getUsers()
      },[path]);
      useEffect(() => {
-          const getsFrinds = async () => {
-
+          //пределать запрос
+          socket.on(`notings?userid=${path}`, () => {
+               setLastPong(new Date().toISOString());
+          });
+     })
+     const sendMessage = () => {
+          if(path === user.userID){
+               socket.emit("edit_profile", {id: path})
+          }else{
+               console.log(user)
+               socket.emit('add_friend', {id: path, userAddidDb: user._id})
           }
-          getsFrinds()
-     },[path])
+          
+     }
+     console.log(lastPong)
      if(users_gets === null){
           return(
                <div>Загруза ...</div>
@@ -46,7 +57,10 @@ const Profile = ({ user }) => {
                          <div>
                               <h4 className="">{users_gets.discord.userName}</h4>
                               <span className="">{users_gets.user.desc}</span>
-                              <button>Редактирование профеля</button>
+                              <button onClick={sendMessage}>Редактирование профеля</button>
+                         </div>
+                         <div>
+                              {}
                          </div>
                     </div>
                ):(
@@ -65,7 +79,7 @@ const Profile = ({ user }) => {
                          <div>     
                               <h4 className="">{users_gets.discord.userName}</h4>
                               <span className="">{users_gets.user.desc}</span>
-                              <button>Добавть в друзья</button>
+                              <button onClick={sendMessage}>Добавть в друзья</button>
                          </div>
                     </div>
                )}

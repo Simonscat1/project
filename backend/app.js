@@ -14,7 +14,14 @@ const { port, mongodb } = require("./config.js");
 
 const app = express();
 const server = http.createServer(app)
-const io = socketIO(server)
+
+const io = socketIO(server, {
+    cors:{
+        origin: "http://localhost:3000",
+        methods: ["GET","POST","PUT","DELETE","PATCH"],
+        credentials: true,
+    }
+})
 
 require('./soket/friend')(io)
 
@@ -48,7 +55,7 @@ mongoose.set('strictQuery', false).connect(mongodb, { useNewUrlParser: true }, a
     const db_name = database.connections.map(db => db.name);
     console.log(`Сервер подключен к базе: ${db_name}`);
 
-    app.listen(port, () => {
+    server.listen(port, () => {
         console.log(`Сервер стартанул на порту ${port}`);
     });
 });
