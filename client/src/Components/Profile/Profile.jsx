@@ -19,10 +19,18 @@ const Profile = ({ user }) => {
           getUsers()
      },[path]);
      useEffect(() => {
-          socket.emit(`post_nothings`,{id: user.userID});
-          socket.on('nothings', (data) => {
-              setLastPong(data)
-          })
+          const q1 = () => {
+               socket.emit(`post_nothings`,{id: user.userID});
+               socket.on('nothings', (data) => {
+                    setLastPong(data)
+               })
+          },
+          iterval = setInterval(() => {
+               q1()
+          },10 * 1000)
+          return () => {
+               clearInterval(iterval)
+          }
      })
      const sendMessage = () => {
           if(path === user.userID){
@@ -33,15 +41,12 @@ const Profile = ({ user }) => {
           
      }
 
-     if(users_gets === null){
+     if((users_gets === null) && ((lastPong === null))){
           return(
                <div>Загруза ...</div>
           )
      }
-     if(lastPong === null){
-
-     }
-     console.log(lastPong.lenght)
+     console.log(lastPong)
      return(
           <div>
                {users_gets.user.ID === user.userID ?(
