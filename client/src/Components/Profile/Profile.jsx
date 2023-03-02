@@ -19,26 +19,29 @@ const Profile = ({ user }) => {
           getUsers()
      },[path]);
      useEffect(() => {
-          //пределать запрос
-          socket.on(`notings?userid=${path}`, () => {
-               setLastPong(new Date().toISOString());
-          });
+          socket.emit(`post_nothings`,{id: user.userID});
+          socket.on('nothings', (data) => {
+              setLastPong(data)
+          })
      })
      const sendMessage = () => {
           if(path === user.userID){
                socket.emit("edit_profile", {id: path})
           }else{
-               console.log(user)
                socket.emit('add_friend', {id: path, userAddidDb: user._id})
           }
           
      }
-     console.log(lastPong)
+
      if(users_gets === null){
           return(
                <div>Загруза ...</div>
           )
      }
+     if(lastPong === null){
+
+     }
+     console.log(lastPong.lenght)
      return(
           <div>
                {users_gets.user.ID === user.userID ?(

@@ -5,8 +5,9 @@ module.exports = function(io){
           socket.on('edit_profile', (data, callback)=> {
                console.log(data, "edit_profile")
           })
-          socket.on('nothings', (data) => {
-               //сделать получение requst
+          socket.on('post_nothings', async (data) => {
+               const user = await Schemas.site.findOne({ ID: data.id })
+               socket.emit(`nothings`, user.request);
           })
           socket.on('add_friend', async (friendID, callback)=> {
                const frindUserId = await Schemas.site.findOne({ID: friendID.id});
