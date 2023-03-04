@@ -26,7 +26,7 @@
     font-size: 20px;
     font-weight: bold;
 }
-.avatar {
+.avatars {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -35,4 +35,77 @@
 .link{
     color: inherit;
     text-decoration: none;
+  }
+  .icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon {
+    margin-left: 15px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .iconImg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .counter {
+    width: 5px;
+    height: 5px;
+    background-color: red;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+  }
+  
+  .wq {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+    position: relative;
+  }
+.notifications {
+    position: absolute;
+    top: 50px;
+    right: -80px;
+    background-color: white;
+    color: black;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+  .Text {
+    
+  }
+  .AdderIcon{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .notification {
+    padding: 5px;
+    font-size: 15px;
+  }
+  .Buttons{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .nButton {
+    width: 100%;
+    padding: 5px;
+    margin-top: 10px;
   }

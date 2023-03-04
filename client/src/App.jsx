@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import Login from './Components/Login/Login';
 import Navbar from './Components/Navbar/Navbar';
 import Profile from "./Components/Profile/Profile";
+import socket from "./socket";
 import Home from "./Components/Home/Home"
 
 const App = () => {
     const [userDiscord, setUserDiscord] = useState(null);
+    
     useEffect(() => {
         const getUser = () => {
             fetch('/auth/login/success', {
@@ -29,6 +31,11 @@ const App = () => {
         }
         getUser()
     },[])
+    useEffect(() => {
+        if(userDiscord !== null){
+            socket?.emit("newUser", userDiscord.userID);
+        }
+    });
     if(userDiscord === null){
         return(
             <BrowserRouter>

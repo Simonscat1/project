@@ -10,15 +10,17 @@ const userSchema = Schema({
 
 const site_db = new Schema({
     discord: { type:Schema.Types.ObjectId, ref:'user_auth' },
-    request: {
-        id: { type: Schema.Types.ObjectId, ref:"site"},
-        userID: {type: String, default: ''},
-        userNames: { type: String, default: '' },
-        avatars: { type: String, default: null },
-    },
-    friendsList: [{
-		friendId: {type: String, default: ''},
-		friendName: {type: String, default: ''}
+    request: [{
+        id: { type: Schema.Types.ObjectId  },
+        userID: {type: String },
+        userNames: { type: String  },
+        avatars: { type: String },
+    }],
+    friends: [{
+        id: { type: Schema.Types.ObjectId },
+        userID: {type: String },
+        userNames: { type: String },
+        avatars: { type: String },
 	}],
     elo: { type: String },
     ID: {type: String },

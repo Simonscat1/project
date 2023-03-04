@@ -4,11 +4,10 @@ import Avatars from "../../Images/DiscordAvatars.jpg"
 import socket from "../../socket.js";
 import axios from "axios"
 import "./profile.css"
-//создать увед по добавлению в друзья
+//сделать проверку на то что есть ли req и поменять кнопку на добавлнеие в друзья на галочку
 //создать админ палель и там же сделать редактирование сетки + создание постов
 const Profile = ({ user }) => {
      const [users_gets, setUserGets] = useState(null)
-     const [lastPong, setLastPong] = useState(null);
      const location = useLocation();
      const path = location.pathname.split("/")[1];
      useEffect(() => {
@@ -18,35 +17,20 @@ const Profile = ({ user }) => {
           }
           getUsers()
      },[path]);
-     useEffect(() => {
-          const q1 = () => {
-               socket.emit(`post_nothings`,{id: user.userID});
-               socket.on('nothings', (data) => {
-                    setLastPong(data)
-               })
-          },
-          iterval = setInterval(() => {
-               q1()
-          },10 * 1000)
-          return () => {
-               clearInterval(iterval)
-          }
-     })
+
      const sendMessage = () => {
           if(path === user.userID){
                socket.emit("edit_profile", {id: path})
           }else{
-               socket.emit('add_friend', {id: path, userAddidDb: user._id})
+               socket.emit('add_friend', {id: path, userAddidDb: user._id, socketID: socket.id})
           }
-          
      }
-
-     if((users_gets === null) && ((lastPong === null))){
+     if(users_gets === null){
           return(
                <div>Загруза ...</div>
           )
      }
-     console.log(lastPong)
+
      return(
           <div>
                {users_gets.user.ID === user.userID ?(

@@ -79,7 +79,7 @@ router.get("/discord/callback",
     }), async function(req, res){
         const _id = req.user._id;
         res.cookie("auth", _id, options);
-        res.redirect(`${client_url}/${req.user.userID}`);
+        res.redirect(`${client_url}/`);
     }
 );
 
