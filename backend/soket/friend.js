@@ -78,7 +78,7 @@ module.exports = function(io){
                const frindUserId = await Schemas.site.findOne({ID: friendID.id});
                const userAdd = await Schemas.site.findOne({ discord: friendID.userAddidDb })
                const userAddDiscrd = await Schemas.user_auth.findById(userAdd.discord)
-               if((frindUserId.request.userID != userAdd.ID) || (frindUserId.request == null)){
+               if(frindUserId.request.map(user => user.userID) != userAdd.ID){
                     await frindUserId.updateOne({
                          $push:{
                               request: {

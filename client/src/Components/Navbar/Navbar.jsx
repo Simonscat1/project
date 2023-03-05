@@ -45,9 +45,9 @@ const Navbar = ({ user }) => {
         const removeUserFrinds = async (event) => {
             socket.emit("removeAddUser", {idAddUser: event.target.value, id: isGetUser._id})
         }
-        const displayNotification = ({ id, userNames, avatar }) => {
-            if(avatar === undefined){
-                return(
+        const displayNotification = ({ id, userNames, avatars }) => {
+            if(avatars === undefined){
+                return (
                     <div key={id}>
                         <img className="avatars" src={Discord}  alt="" />
                         <span className="notification">{userNames}</span> 
@@ -56,10 +56,18 @@ const Navbar = ({ user }) => {
                             <button className="nButton" type="button" value={id} onClick={removeUserFrinds}>Отказать</button>
                         </div>
                     </div>
-                    
                 )
             }
-
+            return(
+                <div key={id}>
+                    <img className="avatars" src={avatars}  alt="" />
+                    <span className="notification">{userNames}</span> 
+                    <div className="Buttons">
+                        <button className="nButton" type="button" value={id} onClick={addUserFrinds}>Добавить</button>
+                        <button className="nButton" type="button" value={id} onClick={removeUserFrinds}>Отказать</button>
+                    </div>
+                </div>
+            )
         }
         if(isGetUser === undefined){
             return( 
