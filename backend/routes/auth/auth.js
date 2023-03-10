@@ -47,6 +47,7 @@ router.get("/login/success", async (req, res) => {
             })
             res.status(200).json({
                 user: user_disocrd,
+                users: users,
             });
         };
 

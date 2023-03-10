@@ -13,9 +13,14 @@ const Post = ({ posts }) => {
         };
     });
     return(
-          <div>
-               Создать пост с таймер смены картинки
-          </div>
+        <div>
+            {post.map(postes => (
+                <div key={postes._id}>
+                    <h1 className="postTitle">{postes.title}</h1>
+                    <p className="postLongDesc">{postes.content}</p>
+                </div>
+            ))}
+        </div>
     )
 };
 export default Post;

@@ -1,7 +1,27 @@
-const Home = () => {
-    //создать посты по турнирам и том команды и людей и свеху создать поиск по никнейму
+import Card from "../Card/Card";
+import { useEffect, useState } from "react";
+import "./home.css"
+import socket from "../../socket";
+
+const Home = ({ posts }) => {
+    const [ user, setUser ] = useState(null)
+
+    useEffect(() => {
+        socket?.on('getNothings', (data) => {
+            setUser(data)
+        })
+    })
+
+    const userGetsInfo = ({ userNames, avatars }) => {
+        console.log(userNames, avatars)
+    }
     return(
-        <p>Home</p>
+        <div>
+            {user?.friends?.map(users => userGetsInfo(users))}
+            {posts.map((post) => (
+                <Card key={post._id} posts={post} />
+            ))}
+        </div>
     )
 }
 

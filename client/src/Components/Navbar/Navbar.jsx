@@ -87,12 +87,12 @@ const Navbar = ({ user }) => {
                             <div className="icons">
                                 <div className="icon" onClick={() => setOpen(!open)}>
                                     <img src={Notification} className="iconImg" alt="" />
-                                    {notification?.length > 0 && <div className="counter">{notification?.length}</div>}
+                                    {notification?.request?.length > 0 && <div className="counter">{notification?.request?.length}</div>}
                                 </div>
                             
                             {open && (
                                 <div className="notifications">
-                                        {notification?.map(n => displayNotification(n))}
+                                        {notification?.request?.map(n => displayNotification(n))}
                                 </div>
 
                             )}

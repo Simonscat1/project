@@ -5,11 +5,11 @@ module.exports = function(io){
      const addNewUser = async (userID, socketID) =>{
           if(userID != null){
                !onlineUsers.some((user) => user.userID === userID) &&
-               onlineUsers.push({ userID, socketID })
+               onlineUsers.push({ userID, socketID });
           }
      }
      const removeUser = (socketID) => {
-          onlineUsers = onlineUsers.filter((user) => user.socketID !== socketID)
+          onlineUsers = onlineUsers.filter((user) => user.socketID !== socketID);
      };
         
      const getUser = (userID) => {
@@ -20,24 +20,23 @@ module.exports = function(io){
 
      io.on('connection', (socket) => {
           socket.on("newUser", async (userID, socketID) => {
-               addNewUser(userID, socket.id)
+               addNewUser(userID, socket.id)  ;  
           })
           socket.on('edit_profile', (data, callback)=> {
-               console.log(data, "edit_profile")
+               console.log(data, "edit_profile");
           })
           socket.on('post_nothings', async (data) => {
                const receiver = getUser(data);
-               console.log(receiver)
                if(receiver != undefined){
-                    const user = await Schemas.site.findOne({ ID: receiver.userID })
-                    io.to(receiver.socketID).emit("getNothings", user.request)
+                    const user = await Schemas.site.findOne({ ID: receiver.userID });
+                    io.to(receiver.socketID).emit("getNothings", user);
                }
           })
           socket.on("reqAddFriend", async (data) => {
-               const user = await Schemas.site.findOne({ discord: data.id })
-               const userDiscord = await Schemas.user_auth.findById(data.id)
-               const ontherUser = await Schemas.site.findById(data.idAddUser)
-               const ontherUserDiscord = await Schemas.user_auth.findById(ontherUser.discord)
+               const user = await Schemas.site.findOne({ discord: data.id });
+               const userDiscord = await Schemas.user_auth.findById(data.id);
+               const ontherUser = await Schemas.site.findById(data.idAddUser);
+               const ontherUserDiscord = await Schemas.user_auth.findById(ontherUser.discord);
                await user.updateOne({
                     $push:{
                          friends:{
@@ -47,7 +46,7 @@ module.exports = function(io){
                               avatars: ontherUserDiscord.avatar
                          }
                     }
-               })
+               });
                await user.updateOne({ 
                     $pull: { 
                          request: { 
@@ -63,21 +62,21 @@ module.exports = function(io){
                               avatars: userDiscord.avatar
                          }
                     }
-               })
-          })
+               });
+          });
           socket.on("removeAddUser", async (data) => {
-               const user = await Schemas.site.findOne({ discord: data.id })
+               const user = await Schemas.site.findOne({ discord: data.id });
                await user.updateOne({ 
                     $pull: { 
                          request: { 
                          } 
                     }
                });
-          })
+          });
           socket.on('add_friend', async (friendID, callback)=> {
                const frindUserId = await Schemas.site.findOne({ID: friendID.id});
-               const userAdd = await Schemas.site.findOne({ discord: friendID.userAddidDb })
-               const userAddDiscrd = await Schemas.user_auth.findById(userAdd.discord)
+               const userAdd = await Schemas.site.findOne({ discord: friendID.userAddidDb });
+               const userAddDiscrd = await Schemas.user_auth.findById(userAdd.discord);
                if(frindUserId.request.map(user => user.userID) != userAdd.ID){
                     await frindUserId.updateOne({
                          $push:{
@@ -88,11 +87,11 @@ module.exports = function(io){
                                    avatars: userAddDiscrd.avatar
                               }
                          }
-                    }) 
-               }
-          })
+                    });
+               };
+          });
           socket.on('disconnect', () => {
-               removeUser(socket.id)
-          })
-     })
-}
+               removeUser(socket.id);
+          });
+     });
+};

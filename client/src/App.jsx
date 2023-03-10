@@ -9,6 +9,7 @@ import Home from "./Components/Home/Home"
 
 const App = () => {
     const [userDiscord, setUserDiscord] = useState(null);
+    const [user, setUser] = useState(null)
     
     useEffect(() => {
         const getUser = () => {
@@ -25,6 +26,28 @@ const App = () => {
                 throw new Error("Ошибка")
             }).then((resObject) => {
                 setUserDiscord(resObject.user)
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+        getUser()
+    },[])
+    
+    useEffect(() => {
+        const getUser = () => {
+            fetch('/auth/login/success', {
+                method: "GET",
+                credentials: 'include',
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Credentials": true,
+                }
+            }).then((response) => {
+                if(response.status === 200) return response.json()
+                throw new Error("Ошибка")
+            }).then((resObject) => {
+                setUser(resObject.users)
             }).catch((err) => {
                 console.log(err)
             })
@@ -55,7 +78,7 @@ const App = () => {
             <Routes>
                 <Route 
                     path="/" 
-                    element={<Home />} 
+                    element={<Home users={user}/>} 
                 />
                 <Route
                     path="/login"
