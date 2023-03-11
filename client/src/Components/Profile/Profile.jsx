@@ -4,7 +4,6 @@ import Avatars from "../../Images/DiscordAvatars.jpg"
 import socket from "../../socket.js";
 import axios from "axios"
 import "./profile.css"
-//сделать проверку на то что есть ли req и поменять кнопку на добавлнеие в друзья на галочку
 //создать админ палель и там же сделать редактирование сетки + создание постов
 const Profile = ({ user }) => {
      const [users_gets, setUserGets] = useState(null)
@@ -20,61 +19,73 @@ const Profile = ({ user }) => {
 
      const sendMessage = () => {
           if(path === user.userID){
-               socket.emit("edit_profile", {id: path})
+               socket.emit("edit_profile", {id: path, socketID: socket.id})
           }else{
                socket.emit('add_friend', {id: path, userAddidDb: user._id, socketID: socket.id})
           }
      }
+     const GetUser = () => {
+          const profile = (
+               <div className="">
+                    <div className="">
+                         <img 
+                              className=""
+                              src={
+                                   users_gets.discord.avatar
+                                   ? users_gets.discord.avatar
+                                   : Avatars
+                              }
+                              alt=""
+                         />
+                    </div>
+                    <div className="">
+                         <h4 className="">{users_gets.discord.userName}</h4>
+                         <span className="">{users_gets.user.desc}</span>
+                    </div>
+               </div>
+          )
+          if(users_gets.user.ID === user.userID){
+               return(
+                    <>
+                         {profile}
+                         <button className="" onClick={sendMessage}>Редактирование профеля</button>
+                    </>
+               )
+          }else{
+               const getFriend = users_gets.user.friends
+               const getRequest = users_gets.user.request
+               if(String(getFriend.map(user => user.userID)) !== ""){
+                    return(
+                         <>
+                              {profile}
+                              <button className="">уже в друзьях</button>
+                         </>
+                    )
+               }
+               if(String(getRequest.map(user => user.userID)) !== ""){
+                    return(
+                         <>
+                              {profile}
+                              <button className="">Заявка уже отправленна</button>
+                         </>
+                    )
+               }
+               return(
+                    <>
+                         {profile}
+                         <button onClick={sendMessage}>Добавть в друзья</button>
+                    </>
+               )
+          }
+     }
      if(users_gets === null){
           return(
-               <div>Загруза ...</div>
+               <div className="">Загруза ...</div>
           )
      }
-
      return(
-          <div>
-               {users_gets.user.ID === user.userID ?(
-                    <div>
-                         <div>
-                              <img 
-                                   className=""
-                                   src={
-                                        users_gets.discord.avatar
-                                        ? users_gets.discord.avatar
-                                        : Avatars
-                                   }
-                                   alt=""
-                              />
-                         </div>
-                         <div>
-                              <h4 className="">{users_gets.discord.userName}</h4>
-                              <span className="">{users_gets.user.desc}</span>
-                              <button onClick={sendMessage}>Редактирование профеля</button>
-                         </div>
-                         <div>
-                              {}
-                         </div>
-                    </div>
-               ):(
-                    <div>
-                         <div>
-                              <img 
-                                   className=""
-                                   src={
-                                        users_gets.discord.avatar
-                                        ? users_gets.discord.avatar
-                                        : Avatars
-                                   }
-                                   alt=""
-                              />
-                         </div>
-                         <div>     
-                              <h4 className="">{users_gets.discord.userName}</h4>
-                              <span className="">{users_gets.user.desc}</span>
-                              <button onClick={sendMessage}>Добавть в друзья</button>
-                         </div>
-                    </div>
-               )}
+          <div className="">
+               <GetUser />
           </div>
      )
 }

@@ -5,21 +5,19 @@ const Post = ({ posts }) => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
 
-    const post = [];
-
-    posts.forEach((p) => {
-        if(p._id === path){
-            post.push(p)
+    const Postes = ({_id, title, content}) => {
+        if(_id === path){
+            return(
+                <div className="post" key={_id}>
+                    <h1 className="postTitle">{title}</h1>
+                    <p className="postLongDesc">{content}</p>
+                </div>
+            )
         };
-    });
+    };
     return(
         <div>
-            {post.map(postes => (
-                <div key={postes._id}>
-                    <h1 className="postTitle">{postes.title}</h1>
-                    <p className="postLongDesc">{postes.content}</p>
-                </div>
-            ))}
+            {posts.map(postes => Postes(postes))}
         </div>
     )
 };

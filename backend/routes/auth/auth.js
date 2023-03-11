@@ -2,7 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 
 const Schema = require('../../models/UserSchema.js')
-const {scope_discord, options } = require("../../utill/scope.js");
+const { scope_discord, options } = require("../../utill/scope.js");
 const getCookies = require("../../utill/getCookies.js");
 const { client_url } = require('../../config.js');
 
@@ -46,8 +46,8 @@ router.get("/login/success", async (req, res) => {
                 ID: user_disocrd.userID
             })
             res.status(200).json({
-                user: user_disocrd,
-                users: users,
+                discord: user_disocrd,
+                user: users,
             });
         };
 
@@ -83,22 +83,5 @@ router.get("/discord/callback",
         res.redirect(`${client_url}/`);
     }
 );
-
-router.get("/friends", async (req, res) => {
-     const user_id = req.query.userid;
-     // const username = req.query.username
-     try{
-          const user = await Schema.site.findOne({ friends:{ id: user_id} });
-          if(user.friends = {}){
-               console.log(user)
-          }   
-     }catch(err){
-         res.status(500).json(err);
-     };
-})
-
-router.post("/friends:id", (req, res) => {
-     const id = req.query
-})
 
 module.exports = router;

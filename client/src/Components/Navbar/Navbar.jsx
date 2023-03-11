@@ -42,30 +42,32 @@ const Navbar = ({ user }) => {
         const addUserFrinds = async (event) => {
             socket.emit("reqAddFriend", {idAddUser: event.target.value, id: isGetUser._id})
         }
+
         const removeUserFrinds = async (event) => {
             socket.emit("removeAddUser", {idAddUser: event.target.value, id: isGetUser._id})
         }
+
         const displayNotification = ({ id, userNames, avatars }) => {
-            if(avatars === undefined){
-                return (
-                    <div key={id}>
-                        <img className="avatars" src={Discord}  alt="" />
-                        <span className="notification">{userNames}</span> 
-                        <div className="Buttons">
-                            <button className="nButton" type="button" value={id} onClick={addUserFrinds}>Добавить</button>
-                            <button className="nButton" type="button" value={id} onClick={removeUserFrinds}>Отказать</button>
-                        </div>
-                    </div>
-                )
-            }
-            return(
-                <div key={id}>
-                    <img className="avatars" src={avatars}  alt="" />
+            const requseted = (
+                <div className="">
+                    <img className="avatars" src={Discord}  alt="" />
                     <span className="notification">{userNames}</span> 
                     <div className="Buttons">
                         <button className="nButton" type="button" value={id} onClick={addUserFrinds}>Добавить</button>
                         <button className="nButton" type="button" value={id} onClick={removeUserFrinds}>Отказать</button>
                     </div>
+                </div>
+            )
+            if(avatars === undefined){
+                return (
+                    <div className="" key={id}>
+                        {requseted}
+                    </div>
+                )
+            }
+            return(
+                <div className="" key={id}>
+                    {requseted}
                 </div>
             )
         }
@@ -79,7 +81,7 @@ const Navbar = ({ user }) => {
                     </li>
                 </ul>
             )
-        }else {
+        } else {
             return (
                 <ul className="list">
                     <li className="listItem">
@@ -92,7 +94,7 @@ const Navbar = ({ user }) => {
                             
                             {open && (
                                 <div className="notifications">
-                                        {notification?.request?.map(n => displayNotification(n))}
+                                    {notification?.request?.map(n => displayNotification(n))}
                                 </div>
 
                             )}

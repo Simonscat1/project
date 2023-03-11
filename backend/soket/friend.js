@@ -1,13 +1,15 @@
-const Schemas = require('../models/UserSchema.js')
+const Schemas = require('../models/UserSchema.js');
 
 module.exports = function(io){
-     let onlineUsers = []
+     let onlineUsers = [];
+
      const addNewUser = async (userID, socketID) =>{
           if(userID != null){
                !onlineUsers.some((user) => user.userID === userID) &&
                onlineUsers.push({ userID, socketID });
-          }
-     }
+          };
+     };
+
      const removeUser = (socketID) => {
           onlineUsers = onlineUsers.filter((user) => user.socketID !== socketID);
      };
@@ -15,23 +17,26 @@ module.exports = function(io){
      const getUser = (userID) => {
           if(userID != null){
                return onlineUsers.find((user) => user.userID === userID);
-          }
+          };
      };
 
      io.on('connection', (socket) => {
           socket.on("newUser", async (userID, socketID) => {
-               addNewUser(userID, socket.id)  ;  
-          })
+               addNewUser(userID, socket.id);  
+          });
+
           socket.on('edit_profile', (data, callback)=> {
                console.log(data, "edit_profile");
-          })
+          });
+
           socket.on('post_nothings', async (data) => {
                const receiver = getUser(data);
                if(receiver != undefined){
                     const user = await Schemas.site.findOne({ ID: receiver.userID });
                     io.to(receiver.socketID).emit("getNothings", user);
-               }
-          })
+               };
+          });
+
           socket.on("reqAddFriend", async (data) => {
                const user = await Schemas.site.findOne({ discord: data.id });
                const userDiscord = await Schemas.user_auth.findById(data.id);
@@ -64,6 +69,7 @@ module.exports = function(io){
                     }
                });
           });
+
           socket.on("removeAddUser", async (data) => {
                const user = await Schemas.site.findOne({ discord: data.id });
                await user.updateOne({ 
@@ -73,6 +79,7 @@ module.exports = function(io){
                     }
                });
           });
+
           socket.on('add_friend', async (friendID, callback)=> {
                const frindUserId = await Schemas.site.findOne({ID: friendID.id});
                const userAdd = await Schemas.site.findOne({ discord: friendID.userAddidDb });
@@ -90,6 +97,7 @@ module.exports = function(io){
                     });
                };
           });
+
           socket.on('disconnect', () => {
                removeUser(socket.id);
           });

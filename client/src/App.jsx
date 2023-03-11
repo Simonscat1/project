@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import Login from './Components/Login/Login';
 import Navbar from './Components/Navbar/Navbar';
 import Profile from "./Components/Profile/Profile";
+import Post from "./Pages/Post/Post";
 import socket from "./socket";
-import Home from "./Components/Home/Home"
+import Home from "./Components/Home/Home";
 
 const App = () => {
     const [userDiscord, setUserDiscord] = useState(null);
-    const [user, setUser] = useState(null)
-    
+    const [post,setPost] = useState(null);
     useEffect(() => {
         const getUser = () => {
             fetch('/auth/login/success', {
@@ -22,20 +22,19 @@ const App = () => {
                     "Access-Control-Allow-Credentials": true,
                 }
             }).then((response) => {
-                if(response.status === 200) return response.json()
-                throw new Error("Ошибка")
+                if(response.status === 200) return response.json();
+                throw new Error("Ошибка");
             }).then((resObject) => {
-                setUserDiscord(resObject.user)
+                setUserDiscord(resObject.discord);
             }).catch((err) => {
-                console.log(err)
-            })
-        }
-        getUser()
-    },[])
-    
+                console.log(err);
+            });
+        };
+        getUser();
+    },[]);
     useEffect(() => {
         const getUser = () => {
-            fetch('/auth/login/success', {
+            fetch('/api/posts/get', {
                 method: "GET",
                 credentials: 'include',
                 headers: {
@@ -44,21 +43,23 @@ const App = () => {
                     "Access-Control-Allow-Credentials": true,
                 }
             }).then((response) => {
-                if(response.status === 200) return response.json()
-                throw new Error("Ошибка")
+                if(response.status === 200) return response.json();
+                throw new Error("Ошибка");
             }).then((resObject) => {
-                setUser(resObject.users)
+                setPost(resObject.post);
             }).catch((err) => {
-                console.log(err)
-            })
-        }
-        getUser()
-    },[])
+                console.log(err);
+            });
+        };
+        getUser();
+    },[]);
+    
     useEffect(() => {
         if(userDiscord !== null){
             socket?.emit("newUser", userDiscord.userID);
         }
     });
+
     if(userDiscord === null){
         return(
             <BrowserRouter>
@@ -68,17 +69,29 @@ const App = () => {
                         path="/login"
                         element={<Login />}
                     />
+                    <Route 
+                        path="/" 
+                        element={<Home posts={post}/>} 
+                    />
+                    <Route
+                        path="/post/:id"
+                        element={userDiscord ? <Post key={post._id} posts={post} /> : <Navigate to="/login" />}
+                    />
                 </Routes>
             </BrowserRouter>
-        )
-    }
+        );
+    };
     return (
         <BrowserRouter>
             <Navbar user={userDiscord} />
             <Routes>
                 <Route 
                     path="/" 
-                    element={<Home users={user}/>} 
+                    element={<Home posts={post}/>} 
+                />
+                <Route
+                    path="/post/:id"
+                    element={userDiscord ? <Post key={post._id} posts={post} /> : <Navigate to="/login" />}
                 />
                 <Route
                     path="/login"
@@ -90,7 +103,7 @@ const App = () => {
                 />
             </Routes>
         </BrowserRouter>
-    )
-}
+    );
+};
 
 export default App;

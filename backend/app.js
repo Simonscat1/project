@@ -4,16 +4,16 @@ const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const socketIO = require('socket.io')
-const http = require('http')
+const socketIO = require('socket.io');
+const http = require('http');
 
 const { discord } = require('./passports/index.js');
-const { auth, post } = require('./routes/index.js');
+const { auth, posts } = require('./routes/index.js');
 const { port, mongodb } = require("./config.js");
 
 
 const app = express();
-const server = http.createServer(app)
+const server = http.createServer(app);
 
 const io = socketIO(server, {
     cors:{
@@ -21,9 +21,9 @@ const io = socketIO(server, {
         methods: ["GET","POST","PUT","DELETE","PATCH"],
         credentials: true,
     }
-})
+});
 
-require('./soket/friend')(io)
+require('./soket/friend')(io);
 
 app.use(session({
     name: "web",
@@ -46,7 +46,7 @@ app.use(cors({
 app.use(express.json());
 
 app.use('/auth', auth);
-app.use('/api', post);
+app.use('/api', posts);
 
 mongoose.set('strictQuery', false).connect(mongodb, { useNewUrlParser: true }, async (err, database) => {
     
