@@ -6,6 +6,8 @@ import socket from "../../socket.js";
 import { Link } from "react-router-dom";
 import "./navbar.css"
 
+//создать поиск по никнейму
+//создать админ палель и там же сделать редактирование сетки + создание постов
 const Navbar = ({ user }) => {
     const Logout = async () => {
         window.open(`${process.env.REACT_APP_REDIRECT}/auth/logout`, "_self")
@@ -75,15 +77,22 @@ const Navbar = ({ user }) => {
             return( 
                 <ul className="list">
                     <li className="listItem">
+                        search
+                    </li>
+                    <li className="listItem">
                         <Link className="link" to="login">
                             Login
                         </Link>
                     </li>
+
                 </ul>
             )
         } else {
             return (
                 <ul className="list">
+                    <li className="listItem">
+                        search
+                    </li>
                     <li className="listItem">
                         <div className="wq">
                             <div className="icons">

@@ -8,16 +8,18 @@ const { client_url } = require('../../config.js');
 
 router.route("/").get(async(req,res) => {
     const user_id = req.query.userid;
-    // const username = req.query.username
+    const username = req.query.username
     try{
-        const user = await Schema.site.findOne({ ID: user_id });
-        const { discord, _id, ...other } = user._doc;
-        const user_in_discord = await Schema.user_auth.findById(discord);
-        
-        res.status(200).json({
-            discord: user_in_discord,
-            user: other
-        });
+        if(user_id != undefined){
+            const user = await Schema.site.findOne({ ID: user_id });
+            const { discord, _id, ...other } = user._doc;
+            const user_in_discord = await Schema.user_auth.findById(discord);
+
+            res.status(200).json({
+                discord: user_in_discord,
+                user: other
+            });
+        }
     }catch(err){
         res.status(500).json(err);
     };

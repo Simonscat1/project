@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import Card from "../Card/Card";
+import FriendList from "../../Pages/FrindList/FriendList"
 import socket from "../../socket";
 import "./home.css"
 
-
+//создать топ по elo соло
+//cоздать комнату по командам
+//создать топ команд по elo
 const Home = ({ posts }) => {
     const [ user, setUser ] = useState(null)
 
@@ -13,8 +16,14 @@ const Home = ({ posts }) => {
         })
     })
 
-    const userGetsInfo = ({ userNames, avatars }) => {
-        console.log(userNames, avatars)
+    const friendsGets = (users) => {
+        return(
+            <div className="" key={users._id}>
+                <ul>
+                    <FriendList friend={users} />
+                </ul>
+            </div>
+        )
     }
     const postes = (post) => {
         return(
@@ -25,10 +34,9 @@ const Home = ({ posts }) => {
             </div>
         )
     }
-    
     return(
         <div>
-            {user?.friends?.map(users => userGetsInfo(users))}
+            {user?.friends?.map(users => friendsGets(users))}
             {posts?.map((post) => postes(post))}
         </div>
     )

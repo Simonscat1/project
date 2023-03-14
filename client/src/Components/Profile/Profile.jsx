@@ -4,7 +4,7 @@ import Avatars from "../../Images/DiscordAvatars.jpg"
 import socket from "../../socket.js";
 import axios from "axios"
 import "./profile.css"
-//создать админ палель и там же сделать редактирование сетки + создание постов
+
 const Profile = ({ user }) => {
      const [users_gets, setUserGets] = useState(null)
      const location = useLocation();
