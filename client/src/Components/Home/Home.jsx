@@ -5,7 +5,6 @@ import socket from "../../socket";
 import "./home.css"
 
 //создать топ по elo соло
-//cоздать комнату по командам
 //создать топ команд по elo
 const Home = ({ posts }) => {
     const [ user, setUser ] = useState(null)
@@ -35,8 +34,9 @@ const Home = ({ posts }) => {
         )
     }
     return(
-        <div>
+        <div className="Home">
             {user?.friends?.map(users => friendsGets(users))}
+            {/* тут сделать динамический слайдер */}
             {posts?.map((post) => postes(post))}
         </div>
     )
