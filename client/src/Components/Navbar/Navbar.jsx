@@ -6,6 +6,7 @@ import socket from "../../socket.js";
 import { Link } from "react-router-dom";
 import "./navbar.css"
 
+
 //создать поиск по никнейму
 //создать админ палель и там же сделать редактирование сетки + создание постов
 const Navbar = ({ user }) => {
@@ -129,6 +130,11 @@ const Navbar = ({ user }) => {
                         {Array(isGetUser).map(user =>(
                             <Profile key={user} user={user} />
                         ))}
+                    </li>
+                    <li className="listItem">
+                        <Link className="link" to="groups">
+                            Группы
+                        </Link>
                     </li>
                     <li className="listItem" onClick={Logout}>
                         Logout

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Login from './Components/Login/Login';
 import Navbar from './Components/Navbar/Navbar';
 import Profile from "./Components/Profile/Profile";
+import Groups from "./Components/Groups/Groups";
 import Post from "./Pages/Post/Post";
 import socket from "./socket";
 import Home from "./Components/Home/Home";
@@ -93,9 +94,13 @@ const App = () => {
                     path="/post/:id"
                     element={userDiscord ? <Post key={post._id} posts={post} /> : <Navigate to="/login" />}
                 />
+                <Route 
+                    path="/groups"
+                    element={userDiscord ? <Groups /> : <Login />}
+                />
                 <Route
                     path="/login"
-                     element={userDiscord ? <Navigate to="/" /> : <Login />}
+                    element={userDiscord ? <Navigate to="/" /> : <Login />}
                 />
                 <Route 
                     path="/:id"

@@ -24,6 +24,7 @@ const io = socketIO(server, {
 });
 
 require('./soket/friend')(io);
+require('./soket/groups')(io);
 
 app.use(session({
     name: "web",
