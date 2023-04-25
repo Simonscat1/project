@@ -54,7 +54,7 @@ const App = () => {
         };
         getUser();
     },[]);
-    
+
     useEffect(() => {
         if(userDiscord !== null){
             socket?.emit("newUser", userDiscord.userID);
@@ -96,7 +96,7 @@ const App = () => {
                 />
                 <Route 
                     path="/groups"
-                    element={userDiscord ? <Groups /> : <Login />}
+                    element={userDiscord ? <Groups user={userDiscord} /> : <Login />}
                 />
                 <Route
                     path="/login"

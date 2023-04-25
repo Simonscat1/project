@@ -1,15 +1,17 @@
 import { useState } from "react";
 import Close from "../../Images/times-solid.svg"
-//import socket from "../../socket";
+import socket from "../../socket";
 import "./modal.scss";
 
-const Modal = ({ show, close }) => {
+const Modal = ({ show, close, userID, userName }) => {
     const [ data, setData ] = useState({
         title: '',
         heading: '',
         context: '',
+        owner: userID,
         url: '',
         avatar: '',
+        userName: userName
     })
 
     const handlerChange = (event) => {
@@ -23,7 +25,8 @@ const Modal = ({ show, close }) => {
         })
     }
     const handleClick = (event) => {
-
+        socket.emit("grope_create", data);
+        window.location.reload()
     }
     return(
         <div>
@@ -48,7 +51,7 @@ const Modal = ({ show, close }) => {
                                 </div>
                                 <div>
                                     <p>О себе</p>
-                                    <textarea onChange={handlerChange} value={data.context} name="content" />
+                                    <textarea onChange={handlerChange} value={data.context} name="context" type="text"  />
                                 </div>
                                 <div>
                                     <p>Личная ссылка</p>

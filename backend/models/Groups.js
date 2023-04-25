@@ -5,7 +5,7 @@ const Team = ({
     content: { type: String },
     image: { type: String },
     elo: { type: String },
-    owner: {type: Boolean},
+    owner: {type: String},
     players: { type: Array },
 });
 
