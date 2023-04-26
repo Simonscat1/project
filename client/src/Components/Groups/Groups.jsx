@@ -25,7 +25,7 @@ const Groups = ({ user }) => {
             });
         };
         getGroup();
-    },[]);
+    },[user]);
 
     const Toggle = () => setModal(!modal); 
     return(

@@ -34,7 +34,7 @@ const App = () => {
         getUser();
     },[]);
     useEffect(() => {
-        const getUser = () => {
+        const getPost = () => {
             fetch('/api/posts/get', {
                 method: "GET",
                 credentials: 'include',
@@ -52,7 +52,7 @@ const App = () => {
                 console.log(err);
             });
         };
-        getUser();
+        getPost();
     },[]);
 
     useEffect(() => {
@@ -72,7 +72,7 @@ const App = () => {
                     />
                     <Route 
                         path="/" 
-                        element={<Home posts={post}/>} 
+                        element={post ? <Home posts={post}/> : <></>} 
                     />
                     <Route
                         path="/post/:id"
@@ -88,7 +88,7 @@ const App = () => {
             <Routes>
                 <Route 
                     path="/" 
-                    element={<Home posts={post}/>} 
+                    element={post ? <Home posts={post}/> : <Navigate to="/login" />} 
                 />
                 <Route
                     path="/post/:id"
@@ -96,8 +96,12 @@ const App = () => {
                 />
                 <Route 
                     path="/groups"
-                    element={userDiscord ? <Groups user={userDiscord} /> : <Login />}
+                    element={userDiscord ? <Groups user={userDiscord} /> : <Navigate to="/login" />}
                 />
+                {/* <Route 
+                    path="/groups/:name"
+                    element={userDiscord ? <Groups user={userDiscord} /> : <Login />} 
+                />*/}
                 <Route
                     path="/login"
                     element={userDiscord ? <Navigate to="/" /> : <Login />}

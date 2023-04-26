@@ -6,8 +6,6 @@ const Card = ({ posts }) => {
         <div className="card">
             <Link className="link" to={`/post/${posts._id}`}>
                 <span className="title">{posts.title}</span>
-                <img src={posts.img} alt="" className="img" />
-                <p className="desc">{posts.context_desc}</p>
                 <button className="cardButton">Read More</button>
             </Link>
         </div>

@@ -30,7 +30,7 @@ const Modal = ({ show, close, userID, userName }) => {
     }
     return(
         <div>
-            { show ?
+            {show ?
                 <div className="modalContainer" onClick={() => close()}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
                         <header className="modal_header">
