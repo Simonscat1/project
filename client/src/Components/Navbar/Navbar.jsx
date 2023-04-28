@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import socket from "../../socket.js";
 import { Link } from "react-router-dom";
 import "./navbar.css"
-
-
+import AdminPanel from "../../Pages/AdminPanel/AdminPanel.jsx"
+const admin = ["323827486750146561"]
 //создать поиск по никнейму
 //создать админ палель и там же сделать редактирование сетки + создание постов
 const Navbar = ({ user }) => {
@@ -104,7 +104,18 @@ const Navbar = ({ user }) => {
                             
                             {open && (
                                 <div className="notifications">
-                                    {notification?.request?.map(n => displayNotification(n))}
+                                    <div className="div-table">
+                                        <div className="div-table-row">
+                                            <p>Заявки в друзья</p>
+                                            {notification?.request?.map(n => displayNotification(n))}
+                                        </div>
+                                        <div className="div-table-row">
+                                            <p>Уведомления</p>
+                                        </div>
+                                        <div className="div-table-row">
+                                            <p>Заявки в группу</p>
+                                        </div>
+                                    </div>
                                 </div>
 
                             )}
@@ -136,6 +147,13 @@ const Navbar = ({ user }) => {
                             Группы
                         </Link>
                     </li>
+                    {admin.find(users => users === isGetUser.userID) ?(
+                        <li className="listItem">
+                            <AdminPanel key="админ палель" user={isGetUser} />
+                        </li>
+                    ):(
+                        <></>
+                    )}
                     <li className="listItem" onClick={Logout}>
                         Logout
                     </li>

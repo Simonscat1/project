@@ -1,13 +1,33 @@
 const router = require('express').Router();
 const Groups = require('../../models/Groups.js')
-const Schema = require("../../models/NotesModels.js");
+const { Note, Notes } = require("../../models/notesModels.js");
 
 router.route("/posts/create").post(async (req, res) => {
-
+    const { title } = req.body
+    // const context_desc = content.split(".")[0]
+    const newNote = new Notes({
+        title,
+        // content,
+        // context_desc,
+        // data_start,
+        // data_end,
+    });
+    newNote.save();
 });
 
+router.route("/posts/req/get").get(async(req,res) => {
+    const postes = await Notes.find().then(notes => notes);
+    postes.forEach((post) =>{
+        res.status(200).json({
+            post_req: post
+        });
+    })
+    
+
+})
+
 router.route("/posts/get").get(async (req, res) => {
-    const posts = await Schema.find().then(notes => notes);
+    const posts = await Note.find().then(notes => notes);
     res.status(200).json({
         post: posts
     });

@@ -1,21 +1,29 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import socket from "../../socket";
+
 import Card from "../Card/Card";
 import FriendList from "../../Pages/FrindList/FriendList"
-import socket from "../../socket";
+import Modal_home from "../../Pages/Modal_home/Modal_home";
+
 import "./home.css"
+
 
 //создать топ по elo соло
 //создать топ команд по elo
-const Home = ({ posts }) => {
+const Home = ({ posts,users }) => {
+    
     const [ user, setUser ] = useState(null)
     const [wordData,setWordData] = useState(posts[0])
-    
+    const [modal, setModal] = useState(false)
     useEffect(() => {
-        socket?.on('getNothings', (data) => {
-            setUser(data)
-        })
-    })
+        const getsUser = () => {
+            socket.on('getNothings', async (data) => {
+                setUser(data)
+            })
+        }
+        getsUser()
+    },[])
 
     const friendsGets = (users) => {
         return(
@@ -48,19 +56,17 @@ const Home = ({ posts }) => {
         )
     }
 
-    function create(event){
-        console.log(event)
-    }
-
     function handleClick(index){
-        const q1 = posts[index]
-        setWordData(q1)
+        const slider = posts[index]
+        setWordData(slider)
     }
+    const Toggle = () => setModal(!modal);
+    
+   
     return(
         <div className="Home">
-            <div>
-                {user?.friends?.map(users => friendsGets(users))}
-            </div>
+            <Modal_home show={modal} close={Toggle}/>
+            {user?.friends?.map(users => friendsGets(users))}
             <div className="slideBanner">
                 <Slider data={wordData}/>
                 <div className='flex_row'>
@@ -70,7 +76,7 @@ const Home = ({ posts }) => {
                 </div>
             </div>
             <div>
-                <button onClick={create}>Создать турнир</button>
+                <button onClick={() => Toggle()}>Создать турнир</button>
                 {posts?.map((post) => postes(post))}
             </div>
             

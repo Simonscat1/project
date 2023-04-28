@@ -8,6 +8,7 @@ import Groups from "./Components/Groups/Groups";
 import Post from "./Pages/Post/Post";
 import socket from "./socket";
 import Home from "./Components/Home/Home";
+import Panel from "./Components/Panel/Panel";
 
 const App = () => {
     const [userDiscord, setUserDiscord] = useState(null);
@@ -88,7 +89,7 @@ const App = () => {
             <Routes>
                 <Route 
                     path="/" 
-                    element={post ? <Home posts={post}/> : <Navigate to="/login" />} 
+                    element={post ? <Home posts={post} users={userDiscord}/> : <Navigate to="/login" />} 
                 />
                 <Route
                     path="/post/:id"
@@ -109,6 +110,10 @@ const App = () => {
                 <Route 
                     path="/:id"
                     element={userDiscord ? <Profile key={userDiscord} user={userDiscord} /> : <Navigate to={`*/${userDiscord.userID}`} />}
+                />
+                <Route 
+                    path="/:id/panel"
+                    element={userDiscord ? <Panel key={userDiscord} user={userDiscord} /> : <Navigate to={`*/${userDiscord.userID}`} />}
                 />
             </Routes>
         </BrowserRouter>
