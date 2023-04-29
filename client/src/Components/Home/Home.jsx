@@ -66,7 +66,9 @@ const Home = ({ posts,users }) => {
     return(
         <div className="Home">
             <Modal_home show={modal} close={Toggle}/>
-            {user?.friends?.map(users => friendsGets(users))}
+            <div className="">
+                {user?.friends?.map(users => friendsGets(users))}
+            </div>
             <div className="slideBanner">
                 <Slider data={wordData}/>
                 <div className='flex_row'>
