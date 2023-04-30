@@ -1,8 +1,44 @@
 .slideBanner{
-    text-align: center;
-    margin-top:30px ;
-  }
-  .flex_row{
-    justify-content: center;
+  text-align: center;
+  margin-top:30px ;
+}
+.flex_row{
+  justify-content: center;
+  display: flex;
+}
+  .home {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    padding: 20px;
+    min-height: calc(90vh - 100px);
+    max-height: calc(100vh - 100px);
+    box-sizing: border-box;
+  }
+  
+  .card {
+    background-color: rgb(38, 41, 45);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0  .411);
+    width: calc(33.33% - 40px);
+    margin: 10px;
+    flex-grow: 1;
+    width: calc(25% - 20px);
+  }
+  
+  .card:nth-child(2),
+  .card:nth-child(5) {
+    width: calc(50% - 20px);
+  }
+  
+  .card h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .card p {
+    font-size: 16px;
+    color: #fff;
   }

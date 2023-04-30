@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import ModalRegGrope from "../../Pages/ModalRegGrope/ModalRegGrope.jsx"
 import Avatars from "../../Images/DiscordAvatars.jpg"
 import socket from "../../socket.js";
 import axios from "axios"
@@ -7,6 +8,9 @@ import "./profile.css"
 
 const Profile = ({ user }) => {
      const [users_gets, setUserGets] = useState(null)
+     const [visible, setVisible] = useState(false);
+     const [modal, setModal] = useState(false)
+
      const location = useLocation();
      const path = location.pathname.split("/")[1];
      useEffect(() => {
@@ -24,6 +28,10 @@ const Profile = ({ user }) => {
                socket.emit('add_friend', {id: path, userAddidDb: user._id, socketID: socket.id})
           }
      }
+
+     const Toggle = () => setModal(!modal);
+
+
      const GetUser = () => {
           const profile = (
                <div className="">
@@ -59,6 +67,17 @@ const Profile = ({ user }) => {
                          <>
                               {profile}
                               <button className="">уже в друзьях</button>
+                              <button onClick={() => setVisible(!visible)}>{visible ? "..." : "..."}</button>
+                              {visible && 
+                              <div>
+                                   <ModalRegGrope show={modal} close={Toggle} user={user} getsusers={users_gets.discord}/>
+                                   <ul>
+                                        <li>
+                                             <button onClick={() => Toggle()}>Добавить в группу</button>
+                                        </li>
+                                   </ul>
+                              </div>
+                              }
                          </>
                     )
                }
@@ -67,6 +86,17 @@ const Profile = ({ user }) => {
                          <>
                               {profile}
                               <button className="">Заявка уже отправленна</button>
+                              <button onClick={() => setVisible(!visible)}>{visible ? "..." : "..."}</button>
+                              {visible && 
+                              <div>
+                                   <ModalRegGrope show={modal} close={Toggle}/>
+                                   <ul>
+                                        <li>
+                                             <button onClick={() => Toggle()}>Добавить в группу</button>
+                                        </li>
+                                   </ul>
+                              </div>
+                              }
                          </>
                     )
                }
@@ -74,6 +104,17 @@ const Profile = ({ user }) => {
                     <>
                          {profile}
                          <button onClick={sendMessage}>Добавть в друзья</button>
+                         <button onClick={() => setVisible(!visible)}>{visible ? "..." : "..."}</button>
+                         {visible && 
+                         <div>
+                              <ModalRegGrope show={modal} close={Toggle}/>
+                              <ul>
+                                   <li>
+                                        <button onClick={() => Toggle()}>Добавить в группу</button>
+                                   </li>
+                              </ul>
+                         </div>
+                         }
                     </>
                )
           }

@@ -2,9 +2,9 @@ import Discord from "../../Images/DiscordAvatars.jpg"
 
 const FriendList = ({ friend }) => {
     return(
-        <div>
+        <div className="">
             <section>
-                <div>
+                <div className="">
                     {friend.avatars === null?(
                         <img 
                             src={Discord}
@@ -13,13 +13,13 @@ const FriendList = ({ friend }) => {
                         />
                     ):(
                         <img 
-                            src={friend.avatar}
+                            src={friend.avatars}
                             alt=""
                             className="avatars"
                         />
                     )}
                 </div>
-                <div>
+                <div className="">
                     {friend.userNames}
                 </div>
             </section>

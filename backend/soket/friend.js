@@ -29,11 +29,11 @@ module.exports = function(io){
                console.log(data, "edit_profile");
           });
 
-          socket.on('post_nothings', async (data) => {
+          socket.on('post_nothings', async (data, socketID) => {
                const receiver = getUser(data);
                if(receiver != undefined){
                     const user = await Schemas.site.findOne({ ID: receiver.userID });
-                    io.to(receiver.socketID).emit("getNothings", user);
+                    io.to(socketID).emit("getNothings", user);
                };
           });
 

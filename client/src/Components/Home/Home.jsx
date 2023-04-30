@@ -16,6 +16,7 @@ const Home = ({ posts,users }) => {
     const [ user, setUser ] = useState(null)
     const [wordData,setWordData] = useState(posts[0])
     const [modal, setModal] = useState(false)
+
     useEffect(() => {
         const getsUser = () => {
             socket.on('getNothings', async (data) => {
@@ -29,7 +30,9 @@ const Home = ({ posts,users }) => {
         return(
             <div className="" key={users._id}>
                 <ul>
-                    <FriendList friend={users} />
+                    <li>
+                        <FriendList friend={users} />
+                    </li>
                 </ul>
             </div>
         )
@@ -46,10 +49,9 @@ const Home = ({ posts,users }) => {
     }
     const Slider = ({data}) => {
         return(
-            <div>
-                <h1>{data?.title}</h1>
+            <div className="">
+                <h2>{data?.title}</h2>
                 <Link to={`/post/${data?._id}`}>
-                    
                     <button href={`/post/${data?._id}`}>перейти</button>
                 </Link>
             </div>
@@ -62,26 +64,54 @@ const Home = ({ posts,users }) => {
     }
     const Toggle = () => setModal(!modal);
     
-   
     return(
-        <div className="Home">
-            <Modal_home show={modal} close={Toggle}/>
-            <div className="">
-                {user?.friends?.map(users => friendsGets(users))}
+        <div className="home">
+            <div className="card">
+                {user == null ?(
+                    <p>Вход</p>
+                ):(
+                    <h2>{user?.friends?.map(users => friendsGets(users))}</h2>
+                )}
+                
             </div>
-            <div className="slideBanner">
+            <div className="card large">
                 <Slider data={wordData}/>
                 <div className='flex_row'>
+                
                     {posts?.map((data, i) =>
                         <h1 key={i} onClick={()=>handleClick(i)}>.</h1>
                     )}
+                    {/* <button className="prev" onClick={() => setIndex(index - 1)}>
+                        <i className="fas fa-arrow-right" />
+                        123
+                    </button>
+                    <button className="next" onClick={() => setIndex(index + 1)}>
+                        <i className="fas fa-arrow-left" />
+                        312
+                    </button> */}
                 </div>
             </div>
-            <div>
-                <button onClick={() => Toggle()}>Создать турнир</button>
+            <div className="card">
+                <h2>Card 3</h2>
+                <p>Card 3 content</p>
+            </div>
+            <div className="card">
+                <h2>Card 4</h2>
+                <p>Card 4 content</p>
+            </div>
+            <div className="card large">
+                 {user == null ?(
+                    <></>
+                ):(
+                    <button onClick={() => Toggle()}>Создать турнир</button>
+                )}
                 {posts?.map((post) => postes(post))}
             </div>
-            
+            <div className="card">
+                <h2>Card 6</h2>
+                <p>Card 6 content</p>
+            </div>
+            <Modal_home show={modal} close={Toggle}/>
         </div>
     )
 }

@@ -19,10 +19,18 @@ const Navbar = ({ user }) => {
 
     useEffect(() => {
         const post_nothings = () => {
-            if(user !== undefined ){
-                socket?.emit('post_nothings', user.userID)
+            if(user !== undefined){
+                socket.emit('post_nothings', user?.userID, socket.id)
             }
+        },
+        iterval = setInterval(() => {
+            post_nothings()
+        },1000)
+        return () => {
+            clearInterval(iterval)
         }
+    })
+    useEffect(() => {
         const getNothings = () => {
             if(user !== undefined ){
                 socket?.on('getNothings', (data) => {
@@ -31,13 +39,13 @@ const Navbar = ({ user }) => {
             }
         },
         iterval = setInterval(() => {
-            post_nothings()
             getNothings()
         },1000)
         return () => {
             clearInterval(iterval)
         }
     })
+    
     
     function GetUser(props){
         const isGetUser = props.isGetUser
@@ -49,6 +57,15 @@ const Navbar = ({ user }) => {
         const removeUserFrinds = async (event) => {
             socket.emit("removeAddUser", {idAddUser: event.target.value, id: isGetUser._id})
         }
+
+        const addGroup = async (event) => {
+            socket.emit("req_add_groupe", {group_add: event.target.value, id: isGetUser._id})
+        }
+
+        const removeGroup = async (event) => {
+            socket.emit("req_remove_groupe", {group_add: event.target.value, id: isGetUser._id})
+        }
+
 
         const displayNotification = ({ id, userNames, avatars }) => {
             const requseted = (
@@ -74,32 +91,49 @@ const Navbar = ({ user }) => {
                 </div>
             )
         }
+        const displayNotification1 = ({ id, userNames, avatars }) => {
+            const requseted = (
+                <div className="">
+                    <img className="avatars" src={Discord}  alt="" />
+                    <span className="notification">{userNames}</span> 
+                    <div className="Buttons">
+                        <button className="nButton" type="button" value={id} onClick={addGroup}>Добавить</button>
+                        <button className="nButton" type="button" value={id} onClick={removeGroup}>Отказать</button>
+                    </div>
+                </div>
+            )
+            if(avatars === undefined){
+                return (
+                    <div className="" key={id}>
+                        {requseted}
+                    </div>
+                )
+            }
+            return(
+                <div className="" key={id}>
+                    {requseted}
+                </div>
+            )
+        }
         if(isGetUser === undefined){
             return( 
                 <ul className="list">
-                    <li className="listItem">
-                        search
-                    </li>
                     <li className="listItem">
                         <Link className="link" to="login">
                             Login
                         </Link>
                     </li>
-
                 </ul>
             )
         } else {
             return (
                 <ul className="list">
                     <li className="listItem">
-                        search
-                    </li>
-                    <li className="listItem">
                         <div className="wq">
                             <div className="icons">
                                 <div className="icon" onClick={() => setOpen(!open)}>
                                     <img src={Notification} className="iconImg" alt="" />
-                                    {notification?.request?.length > 0 && <div className="counter">{notification?.request?.length}</div>}
+                                    {(notification?.request?.length || notification?.request_groupe?.length) > 0 && <div className="counter">{(notification?.request?.length + notification?.request_groupe?.length)}</div>}
                                 </div>
                             
                             {open && (
@@ -110,10 +144,8 @@ const Navbar = ({ user }) => {
                                             {notification?.request?.map(n => displayNotification(n))}
                                         </div>
                                         <div className="div-table-row">
-                                            <p>Уведомления</p>
-                                        </div>
-                                        <div className="div-table-row">
                                             <p>Заявки в группу</p>
+                                            {notification?.request_groupe.map(n =>displayNotification1(n))}
                                         </div>
                                     </div>
                                 </div>
@@ -164,11 +196,25 @@ const Navbar = ({ user }) => {
     }
     return(
         <div className="navbar">
-            <span className="logo">
-                <Link className="link" to="/">
-                    Twitch Revels
-                </Link>
-            </span>
+            <ul className="list">
+                <span className="site-title">
+                    <Link className="link" to="/">
+                        <h1>Twitch Revels</h1>
+                    </Link>
+                </span>
+                <li className="listItem">
+                    <Link className="button" to="/">
+                        Главная
+                        <span className="button-underline"></span>
+                    </Link>
+                </li>
+                <li className="listItem">
+                    <Link className="button" to="groups">
+                        Группы
+                        <span className="button-underline"></span>
+                    </Link>
+                </li>
+            </ul>
             <GetUser isGetUser={user}/>
         </div>
     )

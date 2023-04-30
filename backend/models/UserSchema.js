@@ -10,6 +10,11 @@ const userSchema = Schema({
 
 const site_db = new Schema({
     discord: { type:Schema.Types.ObjectId, ref:'user_auth' },
+    request_groupe:[{
+        id: { type: Schema.Types.ObjectId },
+        userNames: { type: String  },
+        avatars: { type: String },
+    }],
     request: [{
         id: { type: Schema.Types.ObjectId  },
         userID: {type: String },

@@ -37,20 +37,22 @@ router.route("/posts/group/get").get(async(req, res) => {
     const userID = req.query.userID
     try{
         if(userID != undefined){
-            
             const group = await Groups.findOne({ owner: String(userID) });
             if(group == null){
                 const groups_plear = await Groups.find({ "players.id": userID })
+                groups_plear.forEach( async (group) =>{
+                    res.status(200).json({
+                        groups: group
+                    })
+                })
+            }else{
                 res.status(200).json({
-                    groups: groups_plear
+                    groups: group
                 })
             }
-            res.status(200).json({
-                groups: group
-            })
         }
     }catch(err){
-        res.status(500).json(err);
+        console.log(err)
     }
 })
 

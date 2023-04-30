@@ -1,4 +1,5 @@
 import Modal from "../../Pages/Modal/Modal"
+import ProfileGroup from "../../Pages/ProfileGroup/ProfileGroup";
 import { useState, useEffect } from "react";
 import "./groups.css"
 
@@ -28,15 +29,13 @@ const Groups = ({ user }) => {
     },[user]);
 
     const Toggle = () => setModal(!modal); 
+
     return(
         <div>
             {group != null ? (
                 <div>
                 <div>
-                    {group.title}
-                </div>
-                <div>
-                    {group.image}
+                    <ProfileGroup key={group} group={group} />
                 </div>
             </div>
             ):(
