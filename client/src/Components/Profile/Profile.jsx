@@ -86,17 +86,6 @@ const Profile = ({ user }) => {
                          <>
                               {profile}
                               <button className="">Заявка уже отправленна</button>
-                              <button onClick={() => setVisible(!visible)}>{visible ? "..." : "..."}</button>
-                              {visible && 
-                              <div>
-                                   <ModalRegGrope show={modal} close={Toggle}/>
-                                   <ul>
-                                        <li>
-                                             <button onClick={() => Toggle()}>Добавить в группу</button>
-                                        </li>
-                                   </ul>
-                              </div>
-                              }
                          </>
                     )
                }
@@ -104,17 +93,6 @@ const Profile = ({ user }) => {
                     <>
                          {profile}
                          <button onClick={sendMessage}>Добавть в друзья</button>
-                         <button onClick={() => setVisible(!visible)}>{visible ? "..." : "..."}</button>
-                         {visible && 
-                         <div>
-                              <ModalRegGrope show={modal} close={Toggle}/>
-                              <ul>
-                                   <li>
-                                        <button onClick={() => Toggle()}>Добавить в группу</button>
-                                   </li>
-                              </ul>
-                         </div>
-                         }
                     </>
                )
           }

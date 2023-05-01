@@ -20,7 +20,8 @@ const Groups = ({ user }) => {
                 if(response.status === 200) return response.json();
                 throw new Error("Ошибка");
             }).then((resObject) => {
-                setGroup(resObject.groups);
+                console.log(resObject.groups)
+                    setGroup(resObject.groups);
             }).catch((err) => {
                 console.log(err);
             });
@@ -29,18 +30,21 @@ const Groups = ({ user }) => {
     },[user]);
 
     const Toggle = () => setModal(!modal); 
-
+    const GetsAllGroup = (groups) => {
+        if(groups != null){
+            return(
+                <div className="" key={groups._id}>
+                    <ul>
+                        <ProfileGroup group={groups} />
+                    </ul>
+                </div>
+            )
+        }
+    }
+    console.log(group)
     return(
         <div>
-            {group != null ? (
-                <div>
-                <div>
-                    <ProfileGroup key={group} group={group} />
-                </div>
-            </div>
-            ):(
-                <div></div>
-            )}
+            {group?.map(groups => GetsAllGroup(groups))}
             <div>
                 <h3>Группы</h3>
                 <div>

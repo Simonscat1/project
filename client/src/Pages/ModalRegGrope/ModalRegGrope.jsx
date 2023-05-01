@@ -18,7 +18,9 @@ const ModalRegGrope = ({ show, close, user, getsusers }) => {
                 if(response.status === 200) return response.json();
                 throw new Error("Ошибка");
             }).then((resObject) => {
-                setGroup(resObject.groups);
+                resObject.groups.forEach(group => {
+                    setGroup(group);
+                });
             }).catch((err) => {
                 console.log(err);
             });

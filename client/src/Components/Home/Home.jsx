@@ -92,12 +92,10 @@ const Home = ({ posts,users }) => {
                 </div>
             </div>
             <div className="card">
-                <h2>Card 3</h2>
-                <p>Card 3 content</p>
+                <h2>Coming soon</h2>
             </div>
             <div className="card">
-                <h2>Card 4</h2>
-                <p>Card 4 content</p>
+                <h2>Coming soon</h2>
             </div>
             <div className="card large">
                  {user == null ?(
@@ -108,8 +106,7 @@ const Home = ({ posts,users }) => {
                 {posts?.map((post) => postes(post))}
             </div>
             <div className="card">
-                <h2>Card 6</h2>
-                <p>Card 6 content</p>
+                <h2>Coming soon</h2>
             </div>
             <Modal_home show={modal} close={Toggle}/>
         </div>

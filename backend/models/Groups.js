@@ -9,6 +9,6 @@ const Team = ({
     players: { type: Array },
 });
 
-const Teams = mongoose.model("Teams", Team);
+const Teams = mongoose.model("teams", Team, 'teams');
 
 module.exports = Teams;

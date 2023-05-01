@@ -6,9 +6,8 @@ import "./modal.scss";
 const Modal_home = ({ show, close }) => {
     const [ data, setData ] = useState({
         title: '',
-        avatar: '',
     })
-
+    const [file, setFile] = useState(null);
     const handlerChange = (event) => {
         const {name, value} = event.target;
 
@@ -18,6 +17,9 @@ const Modal_home = ({ show, close }) => {
                 [name]:value
             }
         })
+    }
+    const upload = (event) => {
+        setFile(event.target.files[0])
     }
     const handleClick = async (event) => {
         axios.post("/api/posts/create", data)
@@ -42,6 +44,7 @@ const Modal_home = ({ show, close }) => {
                                 </div>
                                 <div>
                                     <p>Аватарка</p>
+                                    <input type="file" onChange={upload} />
                                 </div>
                             </form>
                         </main>

@@ -9,11 +9,11 @@ const Modal = ({ show, close, userID, userName }) => {
         heading: '',
         context: '',
         owner: userID,
-        url: '',
-        avatar: '',
         userName: userName
     })
+    const [file, setFile] = useState(null);
 
+    
     const handlerChange = (event) => {
         const {name, value} = event.target;
 
@@ -23,9 +23,17 @@ const Modal = ({ show, close, userID, userName }) => {
                 [name]:value
             }
         })
+        
     }
-    const handleClick = (event) => {
-        socket.emit("grope_create", data);
+    function upload(event){
+        setFile(event.target.files[0])
+    }
+
+    const handleClick = async (event) => {
+        socket.emit("grope_create",{ data:data, img:file }, (status) => {
+            console.log(status)
+            
+        })
         window.location.reload()
     }
     return(
@@ -55,10 +63,12 @@ const Modal = ({ show, close, userID, userName }) => {
                                 </div>
                                 <div>
                                     <p>Личная ссылка</p>
-                                    <input onChange={handlerChange} value={data.url} name="url" type="text" />/
+                                    <input onChange={handlerChange} value={data.url} name="url"  placeholder={data.title}/>/
                                 </div>
                                 <div>
                                     <p>Аватарка</p>
+                                    {/* <img src={file} width="200" height="200"/> */}
+                                    <input type="file" onChange={upload} />
                                 </div>
                             </form>
                         </main>

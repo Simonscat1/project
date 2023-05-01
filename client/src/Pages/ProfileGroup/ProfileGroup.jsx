@@ -5,7 +5,6 @@ const ProfileGroup = ({ group }) =>{
         <div className="">
             <Link className="link" to={`/groups/${group.title}`}>
                 {group.title}
-                {group.image}
             </Link>
         </div>
     )

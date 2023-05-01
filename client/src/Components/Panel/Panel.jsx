@@ -17,8 +17,8 @@ const Panel = ({ user }) => {
             }).then((response) => {
                 if(response.status === 200) return response.json();
                 throw new Error("Ошибка");
-            }).then((resObject) => {
-                setReqPost(resObject.post_req);
+            }).then((resObject) => { 
+                    setReqPost(resObject.post_req)
             }).catch((err) => {
                 console.log(err);
             });
@@ -27,8 +27,19 @@ const Panel = ({ user }) => {
     })
 
     const GetUser = ({ isUserGet,reqPost }) => {
+        const Postes_add = (reqPost) => {
+            return(
+                <div className="" key={reqPost._id}>
+                    <ul>
+                        {reqPost.title}
+                    </ul>
+                </div>
+            )
+        }
         return(
-            <>{reqPost.title}</>
+            <div>
+                {reqPost.map(reqPost => Postes_add(reqPost))}
+            </div>
         )
     }
     const GuestGreeting = ({ isUserGets }) =>{

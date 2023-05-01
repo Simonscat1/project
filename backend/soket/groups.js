@@ -3,12 +3,12 @@ const Groups = require('../models/Groups.js');
 
 module.exports = function(io){
     io.on('connection', (socket) => {
-        socket.on("grope_create", async (data) => {
+        socket.on("grope_create", async ({ data }) => {
             if(data != ''){
                 const create_grope = new Groups({
                     title: data.title,
                     content: data.context,
-                    image: data.avatar,
+                    image: '',
                     elo:'0',
                     owner: data.owner,
                     players: {

@@ -2,6 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 
 const Schema = require('../../models/UserSchema.js')
+const Grope = require('../../models/Groups.js')
 const { scope_discord, options } = require("../../utill/scope.js");
 const getCookies = require("../../utill/getCookies.js");
 const { client_url } = require('../../config.js');
@@ -12,13 +13,26 @@ router.route("/").get(async(req,res) => {
     try{
         if(user_id != undefined){
             const user = await Schema.site.findOne({ ID: user_id });
-            const { discord, _id, ...other } = user._doc;
-            const user_in_discord = await Schema.user_auth.findById(discord);
-
-            res.status(200).json({
-                discord: user_in_discord,
-                user: other
-            });
+            if(user != null){
+                const { discord, _id, ...other } = user._doc;
+                const user_in_discord = await Schema.user_auth.findById(discord);
+    
+                res.status(200).json({
+                    discord: user_in_discord,
+                    user: other
+                });
+            }
+        }else{
+            const user = await Schema.user_auth.findOne({ userName: { $regex: `.*\\${username}.*` } })
+            if(user != null){
+                const { userID, _id, ...other } = user._doc;
+                const user_in_discord = await Schema.site.findOne({ ID: userID });
+    
+                res.status(200).json({
+                    discord: user,
+                    user: user_in_discord
+                });
+            }
         }
     }catch(err){
         res.status(500).json(err);
