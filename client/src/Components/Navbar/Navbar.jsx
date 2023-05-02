@@ -3,13 +3,13 @@ import Notification from "../../Images/Notification.svg"
 import Discord from "../../Images/DiscordAvatars.jpg"
 import { useEffect, useState } from "react";
 import socket from "../../socket.js";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./navbar.css"
 import axios from "axios"
 import AdminPanel from "../../Pages/AdminPanel/AdminPanel.jsx"
+
 const admin = ["323827486750146561"]
-//создать поиск по никнейму
-//создать админ палель и там же сделать редактирование сетки + создание постов
+
 const Navbar = ({ user }) => {
     const Logout = async () => {
         window.open(`${process.env.REACT_APP_REDIRECT}/auth/logout`, "_self")

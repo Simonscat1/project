@@ -1,13 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 import Close from "../../Images/times-solid.svg"
-import "./modal.scss";
+import "./modalHome.scss";
 
 const Modal_home = ({ show, close }) => {
     const [ data, setData ] = useState({
         title: '',
     })
-    const [file, setFile] = useState(null);
+    // const [file, setFile] = useState(null);
     const handlerChange = (event) => {
         const {name, value} = event.target;
 
@@ -18,9 +18,9 @@ const Modal_home = ({ show, close }) => {
             }
         })
     }
-    const upload = (event) => {
-        setFile(event.target.files[0])
-    }
+    // const upload = (event) => {
+    //     setFile(event.target.files[0])
+    // }
     const handleClick = async (event) => {
         axios.post("/api/posts/create", data)
         window.location.reload()
@@ -31,7 +31,7 @@ const Modal_home = ({ show, close }) => {
                 <div className="modalContainer" onClick={() => close()}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
                         <header className="modal_header">
-                            <h2 className="modal_header-title">123</h2>
+                            <h2 className="modal_header-title">Заявка на турнир</h2>
                             <button className="close" onClick={() => close()}>
                                 <img src={Close} alt="close" />
                             </button>
@@ -44,7 +44,7 @@ const Modal_home = ({ show, close }) => {
                                 </div>
                                 <div>
                                     <p>Аватарка</p>
-                                    <input type="file" onChange={upload} />
+                                    <input type="file"/>
                                 </div>
                             </form>
                         </main>

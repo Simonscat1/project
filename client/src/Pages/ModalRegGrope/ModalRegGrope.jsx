@@ -42,7 +42,7 @@ const ModalRegGrope = ({ show, close, user, getsusers }) => {
                 <div className="modalContainer" onClick={() => close()}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
                         <header className="modal_header">
-                            <h2 className="modal_header-title">Приглосить в группу</h2>
+                            <h2 className="modal_header-title">Пригласить в группу</h2>
                             <button className="close" onClick={() => close()}>
                                 <img src={Close} alt="close" />
                             </button>

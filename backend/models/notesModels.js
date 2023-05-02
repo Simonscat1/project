@@ -16,11 +16,10 @@ const notesSchemaCreate = ({
     // data_end: { type: String },
 });
 
+const Note = mongoose.model("Note", notesSchema);
 const Notes = mongoose.model("reqnotes", notesSchemaCreate);
 
-const Note = mongoose.model("Note", notesSchema);
-
 module.exports = {
-    Notes,
-    Note
+    Note,
+    Notes
 };

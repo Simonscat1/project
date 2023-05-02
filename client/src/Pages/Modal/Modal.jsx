@@ -58,12 +58,8 @@ const Modal = ({ show, close, userID, userName }) => {
                                     <input onChange={handlerChange} value={data.heading} name="heading" type="text" />
                                 </div>
                                 <div>
-                                    <p>О себе</p>
+                                    <p>О группе</p>
                                     <textarea onChange={handlerChange} value={data.context} name="context" type="text"  />
-                                </div>
-                                <div>
-                                    <p>Личная ссылка</p>
-                                    <input onChange={handlerChange} value={data.url} name="url"  placeholder={data.title}/>/
                                 </div>
                                 <div>
                                     <p>Аватарка</p>

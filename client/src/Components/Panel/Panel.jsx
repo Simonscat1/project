@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
+import axios from "axios"
 
 const admin = ["323827486750146561"]
 
 const Panel = ({ user }) => {
     const [reqPost, setReqPost] = useState(null)
+    
     useEffect(() => {
         const getPostReq = () => {
             fetch('/api/posts/req/get', {
@@ -25,13 +27,28 @@ const Panel = ({ user }) => {
         };
         getPostReq();
     })
-
     const GetUser = ({ isUserGet,reqPost }) => {
-        const Postes_add = (reqPost) => {
+        async function handlerClikAdd(event){
+            const newPost = {
+                id:event.target.value
+            }
+            axios.put("/api/posts/edit", newPost)
+            window.location.reload()
+        }
+        async function handlerClikRemove(event){
+            const newPost = {
+                id:event.target.value
+            }
+            axios.post("/api/posts/delete", newPost)
+            window.location.reload()
+        }
+        function Postes_add(reqPost){
             return(
                 <div className="" key={reqPost._id}>
                     <ul>
-                        {reqPost.title}
+                        <p>| Название поста: {reqPost.title}||</p>
+                        <button className="" title="delete" onClick={handlerClikAdd} value={reqPost._id}>Добавить</button>
+                        <button className="" title="delete" onClick={handlerClikRemove} value={reqPost._id}>Удалить</button>
                     </ul>
                 </div>
             )
@@ -39,6 +56,7 @@ const Panel = ({ user }) => {
         return(
             <div>
                 {reqPost.map(reqPost => Postes_add(reqPost))}
+                
             </div>
         )
     }
@@ -52,7 +70,11 @@ const Panel = ({ user }) => {
         for(let i = 0; i < admin.length; i++){
             if(admin[i] === isLoggedIn){
                 if(reqPost !== null){
-                    return <GetUser isUserGet={user} reqPost={reqPost} />
+                    return (
+                        <>
+                            <GetUser isUserGet={user} reqPost={reqPost} />
+                        </>
+                    )
                 }
             }
         }

@@ -63,5 +63,39 @@ module.exports = function(io){
                 }
             })
         })
+        socket.on("remove_groupe_user", async ({ idGroup, user }) => {
+            const gropes = await Groups.findById(idGroup);
+            if(gropes.owner == user.userID){
+                await Groups.findByIdAndDelete(idGroup)
+            }else{
+                await gropes.updateOne({
+                    $pull:{
+                        players:{
+                            id:user.userID,
+                            userName: user.userName
+                        }
+                    }
+                })
+            }
+        })
+        socket.on("search_group", async ({ name,socketID  }) => {
+            const grope = await Groups.find({ title: { $regex: `${name}` }})
+            grope.forEach(gropes => {
+                io.to(socketID).emit("get_Grope",grope)
+            })
+        })
+        socket.on('add_to_grope', async ({ idGroup, user }) =>{
+            const gropes = await Groups.findById(idGroup);
+            if(gropes != null){
+                await gropes.updateOne({
+                    $push:{
+                        players:{
+                            id: user.userID,
+                            userName: user.userName
+                        }
+                    }
+                })
+            }
+        })
     })
 };

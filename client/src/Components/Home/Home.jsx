@@ -8,10 +8,7 @@ import Modal_home from "../../Pages/Modal_home/Modal_home";
 
 import "./home.css"
 
-
-//создать топ по elo соло
-//создать топ команд по elo
-const Home = ({ posts,users }) => {
+const Home = ({ posts }) => {
     
     const [ user, setUser ] = useState(null)
     const [wordData,setWordData] = useState(posts[0])
@@ -66,7 +63,7 @@ const Home = ({ posts,users }) => {
     
     return(
         <div className="home">
-            <div className="card">
+            <div className="cardHome">
                 {user == null ?(
                     <p>Вход</p>
                 ):(
@@ -74,7 +71,7 @@ const Home = ({ posts,users }) => {
                 )}
                 
             </div>
-            <div className="card large">
+            <div className="cardHome large">
                 <Slider data={wordData}/>
                 <div className='flex_row'>
                 
@@ -91,13 +88,13 @@ const Home = ({ posts,users }) => {
                     </button> */}
                 </div>
             </div>
-            <div className="card">
+            <div className="cardHome">
                 <h2>Coming soon</h2>
             </div>
-            <div className="card">
+            <div className="cardHome">
                 <h2>Coming soon</h2>
             </div>
-            <div className="card large">
+            <div className="cardHome large">
                  {user == null ?(
                     <></>
                 ):(
@@ -105,7 +102,7 @@ const Home = ({ posts,users }) => {
                 )}
                 {posts?.map((post) => postes(post))}
             </div>
-            <div className="card">
+            <div className="cardHome">
                 <h2>Coming soon</h2>
             </div>
             <Modal_home show={modal} close={Toggle}/>

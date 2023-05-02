@@ -8,9 +8,6 @@ router.route("/posts/create").post(async (req, res) => {
     const newNote = new Notes({
         title,
         // content,
-        // context_desc,
-        // data_start,
-        // data_end,
     });
     newNote.save();
 });
@@ -56,11 +53,29 @@ router.route("/posts/group/get").get(async(req, res) => {
 })
 
 router.route("/posts/edit").put(async (req, res) => {
-
+    const { id } = req.body
+    const reqPost = await Notes.findById(id)
+    if(reqPost != null){
+        let data = new Date()
+        let date = new Date()
+        date.setMonth(date.getMonth() + 1)
+        // const desc = reqPost.content.split(".")[0]
+        const newPost = new Note({
+            title:reqPost.title,
+            // content: reqPost.content,
+            // context_desc: desc,
+            data_start: data,
+            data_end: date,
+        })
+        newPost.save().then(async () =>{
+            await Notes.findByIdAndDelete(id)
+        })
+    }
 });
 
-router.route("/posts/delete").delete(async (req, res) => {
-
+router.route("/posts/delete").post(async (req, res) => {
+    const { id } = req.body
+    await Notes.findByIdAndDelete(id)
 });
 
 module.exports = router;

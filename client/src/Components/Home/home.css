@@ -17,7 +17,7 @@
     box-sizing: border-box;
   }
   
-  .card {
+  .cardHome {
     background-color: rgb(38, 41, 45);
     padding: 20px;
     border-radius: 8px;
@@ -28,17 +28,17 @@
     width: calc(25% - 20px);
   }
   
-  .card:nth-child(2),
-  .card:nth-child(5) {
+  .cardHome:nth-child(2),
+  .cardHome:nth-child(5) {
     width: calc(50% - 20px);
   }
   
-  .card h2 {
+  .cardHome h2 {
     font-size: 20px;
     margin-bottom: 10px;
   }
   
-  .card p {
+  .cardHome p {
     font-size: 16px;
     color: #fff;
   }
