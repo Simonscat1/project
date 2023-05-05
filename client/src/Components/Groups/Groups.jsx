@@ -30,7 +30,7 @@ const Groups = ({ user }) => {
         };
         getGroup();
     },[user]);
-
+    console.log(group)
     const Toggle = () => setModal(!modal); 
     const GetsAllGroup = (groups, user) => {
         if(groups != null){

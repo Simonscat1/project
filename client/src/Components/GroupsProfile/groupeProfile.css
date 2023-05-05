@@ -1,0 +1,52 @@
+
+  
+  .member-count {
+    margin-left: 120px; 
+    color: #fff;
+  }
+  
+  .group-names-card h3,
+  .avatars-card h3,
+  .group-description-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  
+  .group-names-card p {
+    color: #fff;
+    margin-left: 3px; 
+  }
+  
+  .group-description{
+    color: #fff;
+  }
+  
+  .group-description-placeholder {
+    height: 200px;
+    background-color: #555;
+    border-radius: 4px;
+  }
+  .avatars {
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatars img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  
+  .leave-button {
+    margin-top: 20px;
+    margin-left: 10px;
+    background-color: orange;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }

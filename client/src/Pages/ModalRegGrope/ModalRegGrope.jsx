@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Close from "../../Images/times-solid.svg"
 import socket from "../../socket";
-
+import "./modalRegGrope.scss"
 const ModalRegGrope = ({ show, close, user, getsusers }) => {
     const [group, setGroup] = useState(null)
     useEffect(() => {

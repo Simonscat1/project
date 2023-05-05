@@ -102,7 +102,7 @@ const App = () => {
                 />
                 <Route
                     path="/post/:id"
-                    element={userDiscord ? <Post key={post._id} posts={post} /> : <Navigate to="/login" />}
+                    element={userDiscord ? <Post key={post._id} posts={post} user={userDiscord} /> : <Navigate to="/login" />}
                 />
                 <Route 
                     path="/groups"

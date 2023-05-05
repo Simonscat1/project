@@ -23,16 +23,18 @@ router.route("/").get(async(req,res) => {
                 });
             }
         }else{
-            const user = await Schema.user_auth.findOne({ userName: { $regex: `.*\\${username}.*` } })
-            if(user != null){
-                const { userID, _id, ...other } = user._doc;
-                const user_in_discord = await Schema.site.findOne({ ID: userID });
-    
-                res.status(200).json({
-                    discord: user,
-                    user: user_in_discord
-                });
-            }
+            const user = await Schema.user_auth.find({ userName: { $regex: `${username}` }})
+            let discord = []
+            user.forEach( async (users) => {
+                const user_in_discord = await Schema.site.findOne({ ID: users.userID });
+                if(user_in_discord != null){
+                    discord.push(user_in_discord)
+                }
+            })
+            res.status(200).json({
+                discord: discord,
+                user: user
+            });
         }
     }catch(err){
         res.status(500).json(err);

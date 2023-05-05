@@ -1,5 +1,6 @@
 const Schema = require('../models/UserSchema.js');
 const Groups = require('../models/Groups.js');
+const Reg_teams = require('../models/Registered.js')
 
 module.exports = function(io){
     io.on('connection', (socket) => {
@@ -96,6 +97,15 @@ module.exports = function(io){
                     }
                 })
             }
+        })
+        socket.on('req_add_to_turnires', async ({gropes, socketID}) => {
+            const grop = await Groups.findById(gropes)
+            const registed = new Reg_teams({
+                id: grop._id,
+                title: grop.title,
+                players: grop.players
+            })
+            registed.save()
         })
     })
 };

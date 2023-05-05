@@ -27,7 +27,20 @@
     flex-grow: 1;
     width: calc(25% - 20px);
   }
-  
+  .cardButton{
+    font-size: 16px;
+    background-color: orange;
+    color: #fff;
+    flex-grow: 1;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: calc(100% - 100px);
+  }
+  .q1{
+    list-style-type: none;
+    margin-bottom: 10px;
+  }
   .cardHome:nth-child(2),
   .cardHome:nth-child(5) {
     width: calc(50% - 20px);

@@ -26,7 +26,7 @@ const Home = ({ posts }) => {
     const friendsGets = (users) => {
         return(
             <div className="" key={users._id}>
-                <ul>
+                <ul className="q1">
                     <li>
                         <FriendList friend={users} />
                     </li>
@@ -98,7 +98,7 @@ const Home = ({ posts }) => {
                  {user == null ?(
                     <></>
                 ):(
-                    <button onClick={() => Toggle()}>Создать турнир</button>
+                    <button className="cardButton" onClick={() => Toggle()}>Создать турнир</button>
                 )}
                 {posts?.map((post) => postes(post))}
             </div>

@@ -35,9 +35,8 @@ const Profile = ({ user }) => {
      const GetUser = () => {
           const profile = (
                <div className="">
-                    <div className="">
+                    <div className="profile-avatar">
                          <img 
-                              className=""
                               src={
                                    users_gets.discord.avatar
                                    ? users_gets.discord.avatar
@@ -46,54 +45,59 @@ const Profile = ({ user }) => {
                               alt=""
                          />
                     </div>
-                    <div className="">
-                         <h4 className="">{users_gets.discord.userName}</h4>
+                    <div className="profile-inf">
+                         <h2 className="profile-username">{users_gets.discord.userName}</h2>
                          <span className="">{users_gets.user.desc}</span>
                     </div>
                </div>
           )
           if(users_gets.user.ID === user.userID){
                return(
-                    <>
+                    <div className="profile-container">
                          {profile}
-                         <button className="" onClick={sendMessage}>Редактирование профеля</button>
-                    </>
+                         <div class="profile-actions">
+                              <button className="edit-button" onClick={sendMessage}>Редактирование профеля</button>
+                         </div>
+                    </div>
                )
           }else{
                const getFriend = users_gets.user.friends
                const getRequest = users_gets.user.request
                if(String(getFriend.map(user => user.userID)) !== ""){
                     return(
-                         <>
+                         <div className="profile-container">
                               {profile}
-                              <button className="">уже в друзьях</button>
-                              <button onClick={() => setVisible(!visible)}>{visible ? "..." : "..."}</button>
-                              {visible && 
-                              <div>
-                                   <ModalRegGrope show={modal} close={Toggle} user={user} getsusers={users_gets.discord}/>
-                                   <ul>
-                                        <li>
-                                             <button onClick={() => Toggle()}>Добавить в группу</button>
-                                        </li>
-                                   </ul>
+                              <div class="profile-actions">
+                                   <button className="edit-button">уже в друзьях</button>
+                                   <button className="invite-button" onClick={() => setVisible(!visible)}>{visible ? "..." : "..."}</button>
+                                   {visible && 
+                                   <div>
+                                        <ModalRegGrope show={modal} close={Toggle} user={user} getsusers={users_gets.discord}/>
+                                        <ul className="profile-menu-ul">
+                                             <li>
+                                                  <button className="menu-button" onClick={() => Toggle()}>Добавить в группу</button>
+                                             </li>
+                                        </ul>
+                                   </div>
+                                   }
                               </div>
-                              }
-                         </>
+
+                         </div>
                     )
                }
                if(String(getRequest.map(user => user.userID)) !== ""){
                     return(
-                         <>
+                         <div className="profile-container">
                               {profile}
-                              <button className="">Заявка уже отправленна</button>
-                         </>
+                              <button className="edit-button">Заявка уже отправленна</button>
+                         </div>
                     )
                }
                return(
-                    <>
+                    <div className="profile-container">
                          {profile}
-                         <button onClick={sendMessage}>Добавть в друзья</button>
-                    </>
+                         <button className="edit-button" onClick={sendMessage}>Добавть в друзья</button>
+                    </div>
                )
           }
      }
