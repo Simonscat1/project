@@ -2,7 +2,6 @@ const router = require('express').Router();
 const passport = require('passport');
 
 const Schema = require('../../models/UserSchema.js')
-const Grope = require('../../models/Groups.js')
 const { scope_discord, options } = require("../../utill/scope.js");
 const getCookies = require("../../utill/getCookies.js");
 const { client_url } = require('../../config.js');
@@ -71,8 +70,7 @@ router.get("/login/success", async (req, res) => {
 
     };
 });
-//сделать так чтоб ошибки были перенаправлины на клинскую часть и новр ошибки передовать как и надпись
-//с помощью res.redirect(`${client_url}/${тут номер ошибки}`)
+
 router.get("/login/failed", (req, res) => {
     res.status(401).json({
         success: false,
