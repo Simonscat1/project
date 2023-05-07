@@ -6,6 +6,7 @@ import "./modalHome.scss";
 const Modal_home = ({ show, close }) => {
     const [ data, setData ] = useState({
         title: '',
+        context: '',
     })
     // const [file, setFile] = useState(null);
     const handlerChange = (event) => {
@@ -41,6 +42,10 @@ const Modal_home = ({ show, close }) => {
                                 <div>
                                     <p>Название</p>
                                     <input onChange={handlerChange} value={data.title} name="title" type="text" />
+                                </div>
+                                <div>
+                                    <p>Описание</p>
+                                    <textarea onChange={handlerChange} value={data.title} name="context" type="text" />
                                 </div>
                                 <div>
                                     <p>Аватарка</p>

@@ -6,7 +6,6 @@ import "./modal.scss";
 const Modal = ({ show, close, userID, userName }) => {
     const [ data, setData ] = useState({
         title: '',
-        heading: '',
         context: '',
         owner: userID,
         userName: userName
@@ -52,10 +51,6 @@ const Modal = ({ show, close, userID, userName }) => {
                                 <div>
                                     <p>Название</p>
                                     <input onChange={handlerChange} value={data.title} name="title" type="text" />
-                                </div>
-                                <div>
-                                    <p>Заголовок</p>
-                                    <input onChange={handlerChange} value={data.heading} name="heading" type="text" />
                                 </div>
                                 <div>
                                     <p>О группе</p>

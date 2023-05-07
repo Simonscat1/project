@@ -9,11 +9,8 @@ const notesSchema = ({
 });
 const notesSchemaCreate = ({
     title:{ type: String },
-    // context_desc: { type: String },
-    // content: { type: String },
-    avatars: { type: String },
-    // data_start: { type: String },
-    // data_end: { type: String },
+    context_desc: { type: String },
+    content: { type: String },
 });
 
 const Note = mongoose.model("Note", notesSchema);

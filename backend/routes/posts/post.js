@@ -3,11 +3,12 @@ const Groups = require('../../models/Groups.js')
 const { Note, Notes } = require("../../models/notesModels.js");
 
 router.route("/posts/create").post(async (req, res) => {
-    const { title } = req.body
-    // const context_desc = content.split(".")[0]
+    const { title,content } = req.body
+    const context_desc = content.split(".")[0]
     const newNote = new Notes({
         title,
-        // content,
+        content,
+        context_desc,
     });
     newNote.save();
 });
@@ -59,11 +60,11 @@ router.route("/posts/edit").put(async (req, res) => {
         let data = new Date()
         let date = new Date()
         date.setMonth(date.getMonth() + 1)
-        // const desc = reqPost.content.split(".")[0]
+        const desc = reqPost.content.split(".")[0]
         const newPost = new Note({
             title:reqPost.title,
-            // content: reqPost.content,
-            // context_desc: desc,
+            content: reqPost.content,
+            context_desc: desc,
             data_start: data,
             data_end: date,
         })

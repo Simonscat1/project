@@ -27,7 +27,6 @@ const site_db = new Schema({
         userNames: { type: String },
         avatars: { type: String },
 	}],
-    elo: { type: Number },
     ID: {type: String },
     desc: { type: String, max: 50}
  });
